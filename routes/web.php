@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\userController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('layout');
 });
+Route::get('/p', function () {
+    return view('peminjam/index');
+});
 Route::get('/login', function () {
     return view('login');
 });
@@ -24,3 +28,4 @@ Route::get('/registrasi', function () {
     return view('registrasi');
 });
 Route::resource('/user', userController::class);
+Route::resource('/book', BookController::class);

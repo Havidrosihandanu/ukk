@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
+
+use function Symfony\Component\String\b;
 
 class userController extends Controller
 {
@@ -11,7 +16,9 @@ class userController extends Controller
      */
     public function index()
     {
-        return view('user');
+        $role = Role::all();
+        $users = User::all();
+        return view('user',compact('users','role'));
     }
 
     /**
@@ -27,7 +34,8 @@ class userController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        User::create($request->all());
+        return redirect('user');
     }
 
     /**
@@ -51,7 +59,15 @@ class userController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        User::where('id',$id)
+        ->update([
+            'full_name' => $request->full_name,
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => $request->password,
+            'role_id' => $request->role_id
+        ]);
+        return redirect('user');
     }
 
     /**
@@ -59,6 +75,9 @@ class userController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::where('id',$id)->first();
+        $user->delete();
+        return redirect('user')->with('succes', 'Data Berhasil Dihapus');
+
     }
 }
