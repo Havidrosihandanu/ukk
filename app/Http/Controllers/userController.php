@@ -18,7 +18,7 @@ class userController extends Controller
     {
         $role = Role::all();
         $users = User::paginate(10);
-        return view('user',compact('users','role'));
+        return view('admin&operator.user',compact('users','role'));
     }
 
     /**
@@ -36,7 +36,6 @@ class userController extends Controller
     {
         $this->validate($request,[
         'full_name' => 'required',
-        'username' => 'required|unique:users',
         'address' => 'required',
         'email' => 'required|email|unique:users',
         'role_id' => 'required',
@@ -71,7 +70,6 @@ class userController extends Controller
         User::where('id',$id)
         ->update([
             'full_name' => $request->full_name,
-            'username' => $request->username,
             'email' => $request->email,
             'address' => $request->address,
             'role_id' => $request->role_id

@@ -21,7 +21,7 @@ class BookController extends Controller
         $categories =  Categorie::all();
         $books = Book::paginate(10);
         $raks = Rak::all();
-        return view('book', compact('books', 'categories', 'raks'));
+        return view('admin&operator.book', compact('books', 'categories', 'raks'));
     }
 
     /**

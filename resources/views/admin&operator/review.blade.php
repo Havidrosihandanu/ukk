@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('admin&operator.layout')
 @section('container')
 @section('title')
     User

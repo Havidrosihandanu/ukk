@@ -29,14 +29,15 @@ Route::get('/registrasi', function () {
     return view('registrasi');
 });
 //route resource
-Route::resource('/user', userController::class)->middleware('auth');
-Route::resource('/book', BookController::class)->middleware('auth');
-Route::resource('/borrow', BorrowController::class)->middleware('auth');
-Route::resource('/borrower', BorrowerController::class)->middleware('auth');
-Route::resource('/review', ReviewController::class)->middleware('auth');
-Route::get('/report', [BorrowController::class,'report'])->middleware('auth');
+Route::resource('/user', userController::class)->middleware('adminAndOperator');
+Route::resource('/book', BookController::class)->middleware('adminAndOperator');
+Route::resource('/borrow', BorrowController::class)->middleware('adminAndOperator');
+Route::resource('/review', ReviewController::class)->middleware('adminAndOperator');
+Route::get('/report', [BorrowController::class,'report'])->middleware('adminAndOperator');
 
 //borrower
-Route::get('/borrows/{id}',[BorrowerController::class,'store'])->middleware('auth');
-Route::get('/favorite/{id}',[BorrowerController::class,'addFavorite'])->middleware('auth');
-Route::get('/favorite',[BorrowerController::class,'favorite'])->middleware('auth');
+Route::resource('/borrower', BorrowerController::class)->middleware('borrower');
+Route::get('/borrows/{id}',[BorrowerController::class,'store'])->middleware('borrower');
+Route::get('/favorite/{id}',[BorrowerController::class,'addFavorite'])->middleware('borrower');
+Route::get('/favorite',[BorrowerController::class,'favorite'])->middleware('borrower');
+Route::get('/history',[BorrowerController::class,'history'])->middleware('borrower');

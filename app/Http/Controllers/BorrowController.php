@@ -17,7 +17,7 @@ class   BorrowController extends Controller
         $borrows = Borrow::paginate();
         $users = User::all();
         $books = Book::all();
-        return view('borrow', compact('borrows', 'users', 'books'));
+        return view('admin&operator.borrow', compact('borrows', 'users', 'books'));
     }
 
    
@@ -105,9 +105,9 @@ class   BorrowController extends Controller
     }
 
     public function report(){
-        $borrows = Borrow::paginate(10);
+        $borrows = Borrow::paginate();
         $users = User::all();
         $books = Book::all();
-        return view('report', compact('borrows', 'users', 'books'));
+        return view('admin&operator.report', compact('borrows', 'users', 'books'));
     }
 }

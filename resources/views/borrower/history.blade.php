@@ -5,7 +5,7 @@
 
         <div class="col-md-12">
             <div class="section-title">
-                <h3 class="title">Favorite Book</h3>
+                <h3 class="title">Borrowing History</h3>
                 {{-- <div class="section-nav">
                     <ul class="section-tab-nav tab-nav">
                         <li class="active"><a data-toggle="tab" href="#tab1">Novel</a></li>
@@ -18,22 +18,22 @@
         </div>
         <div class="row">
             <div class="container">
-                @foreach ($favorites as $favorite)
+                @foreach ($historis as $history)
                     <div class="col-md-3">
                         <div class="product">
                             <div class="product-img">
-                                <img src="{{ asset('storage/book/' . $favorite->book->img) }}" width="200px" height="270px"
+                                <img src="{{ asset('storage/book/' . $history->book->img) }}" width="200px" height="270px"
                                     alt="">
                                 <div class="product-label">
-                                    <span class="sale">Favorite</span>
+                                    <span class="sale">History</span>
                                 </div>
                             </div>
                             <div class="product-body">
-                                <h3 class="product-name"><a href="#">{{ $favorite->book->title }}</a></h3>
+                                <h3 class="product-name"><a href="#">{{ $history->book->title }}</a></h3>
                                 <div class="product-rating">
                                 </div>
                                 <div class="product-btns">
-                                    <button type="button" data-toggle="modal" data-target="#modalView{{ $favorite->id }}"
+                                    <button type="button" data-toggle="modal" data-target="#modalView{{ $history->id }}"
                                         class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">
                                             view</span></button>
                                 </div>
@@ -44,8 +44,11 @@
             </div>
         </div>
         <!-- /product -->
-        @foreach ($favorites as $favorite)
-        <div class="modal fade" id="modalView{{ $favorite->id }}" tabindex="-1" role="dialog"
+
+        <!-- Products tab & slick -->
+        
+        @foreach ($historis as $history)
+        <div class="modal fade" id="modalView{{ $history->id }}" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -58,7 +61,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-6 text-center">
-                                <img src="{{ asset('storage/book/' . $favorite->book->img) }}" width="200px" height="270px"
+                                <img src="{{ asset('storage/book/' . $history->book->img) }}" width="200px" height="270px"
                                     alt="">
                             </div>
                             <div class="col-md-6">
@@ -67,17 +70,11 @@
                                         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
                                         font-size: 15px;
                                     }
-                                </style>
-                                <p class="book_detail">Title : {{ $favorite->book->title }}</p>
-                                <p class="book_detail">Book Code : {{ $favorite->book->book_code }}</p>
-                                <p class="book_detail">Category :
-                                    {{ $favorite->book->category->category_name }}</p>
-                                <p class="book_detail">Raks :
-                                    {{ $favorite->book->rak->name }}</p>
-                                <p class="book_detail">Publication Year :
-                                    {{ $favorite->book->publication_year }}</p>
-                                {{-- <p class="book_detail">Stok :
-                                    {{ $favorite->where('title', $book->title)->count() }}</p> --}}
+                                    </style>
+                                <p class="book_detail">Title : {{ $history->book->title }}</p>
+                                <p class="book_detail">Book Code : {{ $history->book->book_code }}</p>
+                                <p class="book_detail">Borrow Date : {{ $history->borrow_date }}</p>
+                                <p class="book_detail">Date Of Return : {{ $history->date_of_return }}</p>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -88,8 +85,7 @@
                 </div>
             </div>
         </div>
-    @endforeach
-        <!-- Products tab & slick -->
-    </div>
-    @include('sweetalert::alert')
-@endsection
+            @endforeach
+        </div>
+            @include('sweetalert::alert')
+            @endsection

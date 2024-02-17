@@ -34,16 +34,18 @@ class BorrowerController extends Controller
      */
     public function store(Request $request, $id)
     {
-        // return "successsssssssssss";
+        $userID = auth()->user()->id ;
+        $no = Borrow::where('user_id',$userID)->count();
         Borrow::create([
-            'user_id' => 8,
+            'borrow_code' => 'Borrow -'. $userID . $id . $no+1,
+            'user_id' => $userID,
             'book_id' => $id,
-            'borrow_date' => "2022-02-04",
-            'date_of_return' => "2022-02-04",
+            'borrow_date' => date('Y-m-d'),
+            'date_of_return' => now()->addDays(14),
             'status' => 'pending',
         ]);
 
-        return redirect('borrower')->with('success', 'The book has been borrowed successfully');
+        return redirect('borrower')->with('success', 'The book has been borrowed successfully, You must Be Return 2 Week Ago ');
     }
 
     /**
@@ -83,12 +85,20 @@ class BorrowerController extends Controller
             'user_id' => auth()->user()->id,
             'book_id' => $id
         ]);
-        return redirect('borrower')->with('success','success add favorite');
+        return redirect('borrower')->with('success', 'success add favorite');
     }
 
     public function favorite()
     {
-       $favorites =  Favorite::all();
-        return view('borrower.favorite',compact('favorites'));
+        $userID = auth()->user()->id;
+        $favorites =  Favorite::where('user_id', $userID)->get();
+        return view('borrower.favorite', compact('favorites'));
+    }
+    public function history()
+    {
+        // $books = Book::all()
+        $userID = auth()->user()->id;
+        $historis =  Borrow::where('user_id', $userID)->get();
+        return view('borrower.history', compact('historis'));
     }
 }

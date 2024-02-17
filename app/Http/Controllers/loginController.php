@@ -12,7 +12,7 @@ class LoginController extends Controller
      */
     public function index()
     {
-        return view('login');
+        return view('auth.login');
     }
 
     /**
@@ -37,6 +37,8 @@ class LoginController extends Controller
             $request->session()->regenerate();
             if(Auth::user()->role_id == 1 ){
                 return redirect()->intended('/user')->with('success','berhasil login');
+            }elseif(Auth::user()->role_id == 2 ){
+                return redirect()->intended('/book')->with('success','berhasil login');
             }else{
                 return redirect()->intended('/borrower')->with('success','berhasil login');
             }

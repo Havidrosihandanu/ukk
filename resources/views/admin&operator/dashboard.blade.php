@@ -3,7 +3,7 @@ use App\Models\User;
 $user = User::count();
 ?>
 
-@extends('layout')
+@extends('admin&operator.layout')
 
 @section('container')
 @section('title')

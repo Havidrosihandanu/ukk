@@ -146,35 +146,39 @@
                                 <p>Dashboard</p>
                             </a>
                         </li>
+                        @can('admin')
                         <li class="nav-item active">
                             <a href="/user" class="nav-link {{ request()->is('user') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-solid fa-user"></i>
                                 <p>User</p>
                             </a>
                         </li>
+                        @endcan
                         <li class="nav-item ">
                             <a href="/book" class="nav-link {{ Request::is('book') ? 'active' : '' }} ">
                                 <i class="nav-icon fa fa-book""></i>
                                 <p>Book</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link {{ Request::is('borrow') ? 'active' : '' }} ">
-                                <i class="nav-icon fa fa-exchange"></i>
-                                <p>
-                                    Transaction
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview" style="display: none;">
-                                <li class="nav-item">
-                                    <a href="/borrow" class="nav-link {{ Request::is('borrow') ? 'active' : '' }} ">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Borrow</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                      @can('operator')
+                      <li class="nav-item">
+                        <a href="#" class="nav-link {{ Request::is('borrow') ? 'active' : '' }} ">
+                            <i class="nav-icon fa fa-exchange"></i>
+                            <p>
+                                Transaction
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview" style="display: none;">
+                            <li class="nav-item">
+                                <a href="/borrow" class="nav-link {{ Request::is('borrow') ? 'active' : '' }} ">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Borrow Confirmation</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                      @endcan
                         <li class="nav-item ">
                             <a href="/report" class="nav-link {{ Request::is('report') ? 'active' : '' }} ">
                                 <i class="nav-icon fas fa-table "></i>

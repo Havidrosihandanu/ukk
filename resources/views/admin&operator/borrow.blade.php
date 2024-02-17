@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('admin&operator.layout')
 @section('container')
 @section('title')
     Borrow
@@ -36,13 +36,13 @@
                         @if (count($errors) > 0)
                             <div class="alert alert-danger"> {{ $errors->first() }} </div>
                         @endif
-                        <button type="button" class="btn btn-primary mb-2" data-toggle="modal"
+                        {{-- <button type="button" class="btn btn-primary mb-2" data-toggle="modal"
                             data-target="#modalCreate">
                             Borrow
-                        </button>
+                        </button> --}}
 
-                        <!-- Modal Create book  -->
-                        <div class="modal fade" id="modalCreate" tabindex="-1" role="dialog"
+                        <!-- Modal Create borrow  -->
+                        {{-- <div class="modal fade" id="modalCreate" tabindex="-1" role="dialog"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
@@ -119,7 +119,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         {{-- end modal create book --}}
 
 
@@ -185,26 +185,18 @@
                                                 @method('PUT')
                                                 <div class="form-group">
                                                     <label for="">Borrower Name</label>
-                                                    <select name="user_id" id=""
-                                                        class="form-control @error('user_id') is-invalid @enderror"">
-                                                        @foreach ($users as $user)
-                                                            <option value="{{ $user->id }}">
-                                                                {{ $user->full_name }}</option>
-                                                        @endforeach
-                                                    </select>
+                                                    <input type="text" name="user_id" id=""
+                                                    class="form-control @error('user_id') is-invalid @enderror"" disabled value="{{$borrow->user->full_name}}">
+                                                    
                                                     @error('user_id')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="">Book</label>
-                                                    <select name="book_id" id=""
-                                                        class="form-control @error('book_id') is-invalid @enderror"">
-                                                        @foreach ($books as $book)
-                                                            <option value="{{ $book->id }}">
-                                                                {{ $book->title }}</option>
-                                                        @endforeach
-                                                    </select>
+                                                    <label for="">Book Title</label>
+                                                    <input type="text" name="book_id" id=""
+                                                    class="form-control @error('book_id') is-invalid @enderror"" disabled value="{{$borrow->book->title}}">
+                                                    
                                                     @error('book_id')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror

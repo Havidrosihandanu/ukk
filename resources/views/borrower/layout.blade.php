@@ -61,7 +61,7 @@
                     <!-- LOGO -->
                     <div class="col-md-3">
                         <div class="header-logo">
-                            <a href="#" class="logo">
+                            <a href="/borrower" class="logo">
                                 <img src="./peminjam/img/logo.png" alt="">
                             </a>
                         </div>
@@ -91,7 +91,7 @@
                             <div>
                                 <a href="/favorite">
                                     <i class="fa fa-heart-o"></i>
-                                    <span>Riwayat</span>
+                                    <span>Favorite</span>
                                     <div class="qty">{{ $favoriteCount }}</div>
                                 </a>
                             </div>
@@ -110,6 +110,13 @@
                                         <button type="submit"
                                             style="border: none;background-color: rgba(255, 255, 255, 0)">Logout</button>
                                     </form>
+                                </a>
+                            </div>
+                            <div>
+                                <a href="/history">
+                                    <i class="fa fa-heart-o"></i>
+                                    <span>History</span>
+                                    <div class="qty">{{ $favoriteCount }}</div>
                                 </a>
                             </div>
                             <!-- /Menu Toogle -->

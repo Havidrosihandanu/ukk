@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('admin&operator.layout')
 @section('container')
 @section('title')
     User
@@ -54,13 +54,6 @@
                                                 <label for="">Full Name</label>
                                                 <input class="form-control @error('full_name') is-invalid @enderror" type="text"  name="full_name" id="">
                                                 @error('full_name')
-                                                    <span class="text-danger">{{$message}}</span>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="">Username</label>
-                                                <input class="form-control @error('username') is-invalid @enderror" type="text" name="username" id="">
-                                                @error('username')
                                                     <span class="text-danger">{{$message}}</span>
                                                 @enderror
                                             </div>
@@ -204,11 +197,6 @@
                                                     <label for="">Full Name</label>
                                                     <input class="form-control" type="text" name="full_name"
                                                         id="" value="{{ $user->full_name }}">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="">Username</label>
-                                                    <input class="form-control" type="text" name="username"
-                                                        id="" value="{{ $user->username }}">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="">Email</label>

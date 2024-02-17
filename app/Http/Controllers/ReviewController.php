@@ -19,7 +19,7 @@ class ReviewController extends Controller
         $reviews = Review::paginate(10);
 
 
-    return view('review',compact('books','users','reviews'));
+    return view('admin&operator.review',compact('books','users','reviews'));
     }
 
     /**
