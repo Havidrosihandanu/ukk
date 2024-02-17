@@ -3,20 +3,20 @@
 @section('title')
     User
 @endsection
-    <!-- DataTables -->
+<!-- DataTables -->
 
-    <!-- Content Header (Page header) -->
+<!-- Content Header (Page header) -->
 @section('header')
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Data Users</h1>
+                    <h1>Review</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="/">Home</a></li>
-                        <li class="breadcrumb-item active">User</li>
+                        <li class="breadcrumb-item active">Review</li>
                     </ol>
                 </div>
             </div>
@@ -34,7 +34,7 @@
                     <div class="card-body">
                         <button type="button" class="btn btn-primary mb-2" data-toggle="modal"
                             data-target="#modalCreate">
-                            Add User
+                            Add Review
                         </button>
                         <!-- Modal create -->
                         <div class="modal fade" id="modalCreate" tabindex="-1" role="dialog"
@@ -42,61 +42,43 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Add User</h5>
+                                        <h5 class="modal-title" id="exampleModalLabel">Add Review</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="{{ route('user.store') }}" method="POST">
+                                        <form action="{{ route('review.store') }}" method="POST">
                                             @csrf
                                             <div class="form-group">
                                                 <label for="">Full Name</label>
-                                                <input class="form-control @error('full_name') is-invalid @enderror" type="text"  name="full_name" id="">
-                                                @error('full_name')
-                                                    <span class="text-danger">{{$message}}</span>
+                                                <input class="form-control @error('user_id') is-invalid @enderror"
+                                                    type="text" name="user_id" id="">
+                                                @error('user_id')
+                                                    <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
                                             <div class="form-group">
-                                                <label for="">Username</label>
-                                                <input class="form-control @error('username') is-invalid @enderror" type="text" name="username" id="">
-                                                @error('username')
-                                                    <span class="text-danger">{{$message}}</span>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="">Email</label>
-                                                <input class="form-control @error('email') is-invalid @enderror" type="email" name="email" id="">
-                                                @error('email')
-                                                    <span class="text-danger">{{$message}}</span>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="">Password</label>
-                                                <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" id="">
-                                                @error('password')
-                                                <span class="text-danger">{{$message}}</span>
-                                            @enderror
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="">Address</label>
-                                                <input class="form-control @error('password') is-invalid @enderror" type="text" name="address"id="">
-                                                @error('address')
-                                                <span class="text-danger">{{$message}}</span>
-                                            @enderror
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="">Role</label>
-                                                <select class="form-control @error('password') is-invalid @enderror" name="role_id" id="">
-                                                    <option value="" > Select role : </option>
-                                                    @foreach ($role as $roles)
-                                                        <option value="{{ $roles->id }}" class="form-control">
-                                                            {{ $roles->role }}</option>
+                                                <label for="">Book </label>
+                                                <select class="form-control @error('book_id') is-invalid @enderror"
+                                                    name="book_id" id="">
+                                                    <option value=""> Select book : </option>
+                                                    @foreach ($books as $book)
+                                                        <option value="{{ $book->id }}" class="form-control">
+                                                            {{ $book->title }}</option>
                                                     @endforeach
                                                 </select>
-                                                @error('address')
-                                                <span class="text-danger">{{$message}}</span>
-                                            @enderror
+                                                @error('book_id')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Review</label>
+                                                <input class="form-control @error('review') is-invalid @enderror"
+                                                    type="text" name="review" id="">
+                                                @error('review')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                             <button type="submit" class="btn btn-success float-right">Save
                                                 changes</button>
@@ -108,13 +90,13 @@
                         {{-- end modal create --}}
 
                         <!-- Modal view -->
-                        @foreach ($users as $user)
-                            <div class="modal fade" id="modalView{{ $user->id }}" tabindex="-1" role="dialog"
+                        @foreach ($reviews as $review)
+                            <div class="modal fade" id="modalView{{ $review->id }}" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Detail {{ $user->full_name }}
+                                            <h5 class="modal-title" id="exampleModalLabel">Detail {{ $review->user_id }}
                                             </h5>
                                             <button type="button" class="close" data-dismiss="modal"
                                                 aria-label="Close">
@@ -125,23 +107,15 @@
                                             <table border="0" collspan="0">
                                                 <tr>
                                                     <td class="td_view">Full Name</td>
-                                                    <td class="">: {{ $user->full_name }}</td>
+                                                    <td class="">: {{ $review->user_id }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="td_view">Username</td>
-                                                    <td class="">: {{ $user->username }}</td>
+                                                    <td class="td_view">Book</td>
+                                                    <td class="">: {{ $review->book_id }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="td_view">Email</td>
-                                                    <td class="">: {{ $user->email }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="td_view">Address</td>
-                                                    <td class="">: {{ $user->address }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="td_view">Role</td>
-                                                    <td class="">: {{ $user->role->role }}</td>
+                                                    <td class="td_view">Review</td>
+                                                    <td class="">: {{ $review->review }}</td>
                                                 </tr>
                                             </table>
                                         </div>
@@ -152,28 +126,28 @@
                         {{-- end modal view --}}
 
                         {{-- modal delete --}}
-                        @foreach ($users as $user)
-                            <div class="modal fade" id="modalDelete{{ $user->id }}" tabindex="-1"
-                                role="dialog" aria-hidden="true">
+                        @foreach ($reviews as $review)
+                            <div class="modal fade" id="modalDelete{{ $review->id }}" tabindex="-1" role="dialog"
+                                aria-hidden="true">
                                 <div class="modal-dialog ">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title">Delete {{ $user->full_name }} </h5>
+                                            <h5 class="modal-title">Delete {{ $review->user_id }} </h5>
                                             <button type="button" class="close"
                                                 data-dismiss="modal"><span>&times;</span></button>
                                         </div>
-                                        <form method="post" action="{{ route('user.destroy', $user->id) }}">
+                                        <form method="post" action="{{ route('review.destroy', $review->id) }}">
                                             @csrf
                                             @method('delete')
                                             <div class="modal-body">
                                                 <div class="form-group">
-                                                    <label>Do you want delete this user ?</label>
+                                                    <label>Do you want delete this review ?</label>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-dismiss="modal"><i class="fa fa-undo"></i>Close</button>
                                                     <button type="submit" class="btn btn-danger"><i
-                                                            class="fa fa-trash"></i>Delete```</button>
+                                                            class="fa fa-trash"></i>Delete</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -184,51 +158,54 @@
                         {{-- end modal delete --}}
 
                         {{-- modal update --}}
-                        @foreach ($users as $user)
-                            <div class="modal fade" id="modalUpdate{{ $user->id }}" tabindex="-1"
+                        @foreach ($reviews as $review)
+                            <div class="modal fade" id="modalUpdate{{ $review->id }}" tabindex="-1"
                                 role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Update Data  {{ $user->full_name }}</h5>
+                                            <h5 class="modal-title" id="exampleModalLabel">Update Data
+                                                {{ $review->full_name }}</h5>
                                             <button type="button" class="close" data-dismiss="modal"
                                                 aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <div class="modal-body">
-                                            <form method="POST" action="{{ route('user.update', $user->id) }}">
-                                                @csrf
+                                        <div class="modal-body"> 
+                                            <form action="{{ route('review.update', $review->id) }}" method="POST">
                                                 @method('PUT')
+                                                @csrf
                                                 <div class="form-group">
                                                     <label for="">Full Name</label>
-                                                    <input class="form-control" type="text" name="full_name"
-                                                        id="" value="{{ $user->full_name }}">
+                                                    <input class="form-control @error('user_id') is-invalid @enderror"
+                                                        type="text" name="user_id" id=""
+                                                        value="{{ $review->user_id }}">
+                                                    @error('user_id')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="">Username</label>
-                                                    <input class="form-control" type="text" name="username"
-                                                        id="" value="{{ $user->username }}">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="">Email</label>
-                                                    <input class="form-control" type="email" name="email"
-                                                        id="" value="{{ $user->email }}">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="">Address</label>
-                                                    <input class="form-control" type="text" name="address"
-                                                        id="" value="{{ $user->address }}">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="">Role</label>
-                                                    <select class="form-control" name="role_id" id="">
-                                                        <option value="{{$user->role->id}}">{{$user->role->role}}</option>
-                                                        @foreach ($role as $roles)
-                                                            <option value="{{ $roles->id }}" class="form-control">
-                                                                {{ $roles->role }}</option>
+                                                    <label for="">Book </label>
+                                                    <select class="form-control @error('book_id') is-invalid @enderror"
+                                                        name="book_id" id="">
+                                                        <option value="{{ $review->book_id }}">
+                                                            {{ $review->book_id }} </option>
+                                                        @foreach ($books as $book)
+                                                            <option value="{{ $book->id }}" class="form-control">
+                                                                {{ $book->title }}</option>
                                                         @endforeach
                                                     </select>
+                                                    @error('book_id')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Review</label>
+                                                    <input class="form-control @error('review') is-invalid @enderror"
+                                                        type="text" name="review" id="">
+                                                    @error('review')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
                                                 </div>
                                                 <button type="submit" class="btn btn-success float-right">Save
                                                     changes</button>
@@ -247,30 +224,30 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Full Name</th>
-                                        <th>Email</th>
-                                        <th>Role</th>
+                                        <th>Book</th>
+                                        <th>Review</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($users as $no => $user)
+                                    @foreach ($reviews as $no => $review)
                                         <tr>
-                                            <td style="width: 50px;">{{ $users->firstItem() + $no }}</td>
-                                            <td>{{ $user->full_name }}</td>
-                                            <td>{{ $user->email }}</td>
-                                            <td>{{ $user->role->role }}</td>
+                                            <td style="width: 50px;">{{ $reviews->firstItem() + $no }}</td>
+                                            <td>{{ $review->user_id }}</td>
+                                            <td>{{ $review->book_id }}</td>
+                                            <td>{{ $review->review }}</td>
                                             <td style="width: 150px">
                                                 <button type="button" class="btn btn-success" data-toggle="modal"
-                                                    data-target="#modalView{{ $user->id }}">
+                                                    data-target="#modalView{{ $review->id }}">
                                                     <i class="fa-solid fa-eye"></i>
                                                 </button>
                                                 <button type="button" data-toggle="modal"
-                                                    data-target="#modalUpdate{{ $user->id }}"
+                                                    data-target="#modalUpdate{{ $review->id }}"
                                                     class="btn btn-warning">
                                                     <i class="fa-solid fa-pen"></i>
                                                 </button>
                                                 <button type="button" data-toggle="modal"
-                                                    data-target="#modalDelete{{ $user->id }}"
+                                                    data-target="#modalDelete{{ $review->id }}"
                                                     class="btn btn-danger">
                                                     <i class="fa-solid fa-trash"></i>
                                                 </button>
@@ -282,7 +259,7 @@
                             </table>
                         </div>
                         {{-- end user table --}}
-                        
+
                         <!-- /.card-body -->
                     </div>
                 </div>

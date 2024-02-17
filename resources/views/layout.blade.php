@@ -4,7 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PUSDIG | Dashboard</title>
+
+    <title>
+        @yield('title')
+    </title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="css/style.css">
@@ -52,7 +55,7 @@
                             class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="index3.html" class="nav-link">Home</a>
+                    <a href="/" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link">Contact</a>
@@ -102,9 +105,9 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="index3.html" class="brand-link">
-                <img src="dashboaord/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+                <img src="/perpus.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
                     style="opacity: .8">
-                <span class="brand-text font-weight-light">AdminLTE 3</span>
+                <span class="brand-text a nt-weight-light">SI INPUS</span>
             </a>
 
             <!-- Sidebar -->
@@ -112,10 +115,11 @@
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="dashboaord/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                        <img src="/avatar5.png" class="img-circle elevation-2"
+                            alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Mang Aped</a>
+                        <a href="#" class="d-block">{{ auth()->user()->full_name }} </a>
                     </div>
                 </div>
 
@@ -136,24 +140,82 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
-                        <li class="nav-item">
-                            <a href="/" class="nav-link">
+                        <li class="nav-item ">
+                            <a href="/" class="nav-link {{ request()->is('/') ? 'active' : '' }} ">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="/user" class="nav-link">
-                                <i class="nav-icon fas fa-solid fa-user""></i>
+                        <li class="nav-item active">
+                            <a href="/user" class="nav-link {{ request()->is('user') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-solid fa-user"></i>
                                 <p>User</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="/book" class="nav-link">
+                        <li class="nav-item ">
+                            <a href="/book" class="nav-link {{ Request::is('book') ? 'active' : '' }} ">
                                 <i class="nav-icon fa fa-book""></i>
-                                <p>List Buku</p>
+                                <p>Book</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link {{ Request::is('borrow') ? 'active' : '' }} ">
+                                <i class="nav-icon fa fa-exchange"></i>
+                                <p>
+                                    Transaction
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview" style="display: none;">
+                                <li class="nav-item">
+                                    <a href="/borrow" class="nav-link {{ Request::is('borrow') ? 'active' : '' }} ">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Borrow</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item ">
+                            <a href="/report" class="nav-link {{ Request::is('report') ? 'active' : '' }} ">
+                                <i class="nav-icon fas fa-table "></i>
+                                <p>Generate report</p>
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a href="/review" class="nav-link {{ Request::is('review') ? 'active' : '' }} ">
+                                <i class="nav-icon fas fa-table "></i>
+                                <p>Review</p>
+                            </a>
+                            {{-- <a class="dropdown-item">
+                                <form action="/logout" method="POST">
+                                  @method('post')
+                                  @csrf
+                                  <button type="submit" style="border: none;background-color: rgba(255, 255, 255, 0)"><i class="ti-power-off text-primary"></i></button>
+                                  Logout
+                                    </form>
+                                </a> --}}
+                        </li>
+                        <li class="nav-item ">
+                            <form action="/logout" method="POST">
+                                @method('post')
+                                @csrf
+                                <button type="submit"
+                                    style="border: none;background-color: rgba(255, 255, 255, 0)"><i
+                                        class="ti-power-off text-primary"></i>  Logout</button>
+                              
+                            </form>
+                        </li>
+                        {{-- <li class="nav-item ">
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                        </li> --}}
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
@@ -227,7 +289,6 @@
     <script src="dashboard/dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="dashboard/dist/js/pages/dashboard.js"></script>
-
     <!-- DataTables  & dashboard/Plugins -->
     <script src="dashboard/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="dashboard/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -241,6 +302,7 @@
     <script src="dashboard/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="dashboard/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="dashboard/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <!-- Page specific script -->
     <script src="https://kit.fontawesome.com/8d9e037b07.js" crossorigin="anonymous"></script>
     <script>
@@ -249,7 +311,7 @@
                 "responsive": true,
                 "lengthChange": false,
                 "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                "buttons": ["excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
             $('#example2').DataTable({
                 "paging": true,

@@ -10,11 +10,11 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="dashboard/plugins/fontawesome-free/css/all.min.css">
     <!-- icheck bootstrap -->
-    <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="dashboard/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="dashboard/dist/css/adminlte.min.css">
 </head>
 
 <body class="hold-transition login-page">
@@ -26,24 +26,49 @@
         <div class="card">
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
-
-                <form action="../../index3.html" method="post">
+                @if (session()->has('loginerror'))
+                    <label>
+                        <div class="alert error">
+                            <span class="alertText">{{ session('loginerror') }}
+                                <br class="clear" /></span>
+                        </div>
+                    </label>
+                @endif
+                <form action="{{ route('login.store') }}" method="post">
+                    @csrf
+                    {{-- <div class="form-group">
+                        <label for="">Full Name</label>
+                        <input class="form-control @error('user_id') is-invalid @enderror"
+                            type="text" name="user_id" id=""
+                            value="{{ $review->user_id }}">
+                        @error('user_id')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div> --}}
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Username">
+                        <input type="text" class="form-control @error('email') is-invalid @enderror"
+                            placeholder="Email" name="email">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-solid fa-user"></span>
                             </div>
                         </div>
                     </div>
+                    @error('email')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control" placeholder="Password">
+                        <input type="password" class="form-control @error('password') is-invalid @enderror"
+                            placeholder="Password" name="password">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
                             </div>
                         </div>
                     </div>
+                    @error('password')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                     <div class="row">
                         <!-- /.col -->
                         <div class="col-12">
@@ -65,11 +90,12 @@
     <!-- /.login-box -->
 
     <!-- jQuery -->
-    <script src="../../plugins/jquery/jquery.min.js"></script>
+    <script src="dashboard/plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
-    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="dashboard/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
-    <script src="../../dist/js/adminlte.min.js"></script>
+    <script src="dashdashboard/dist/js/adminlte.min.js"></script>
+    @include('sweetalert::alert')
 </body>
 
 </html>

@@ -3,15 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class loginController extends Controller
+class LoginController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return view('login');
     }
 
     /**
@@ -27,7 +28,20 @@ class loginController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $credentials = $request -> validate([
+            'email' => 'required',
+            'password' => 'required'
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            if(Auth::user()->role_id == 1 ){
+                return redirect()->intended('/user')->with('success','berhasil login');
+            }else{
+                return redirect()->intended('/borrower')->with('success','berhasil login');
+            }
+        }
+        return back()->with('loginerror','username / password tidak sesuai !!');
     }
 
     /**
@@ -60,5 +74,12 @@ class loginController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function logout(Request $request){
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('login');
     }
 }

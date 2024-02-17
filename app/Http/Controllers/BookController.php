@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Bookcode;
 use App\Models\Categorie;
+use App\Models\Rak;
+use App\Models\Raks;
+use App\Models\Stok;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -15,8 +19,9 @@ class BookController extends Controller
     public function index()
     {
         $categories =  Categorie::all();
-        $books = Book::all();
-        return view('book', compact('books','categories'));
+        $books = Book::paginate(10);
+        $raks = Rak::all();
+        return view('book', compact('books', 'categories', 'raks'));
     }
 
     /**
@@ -26,33 +31,38 @@ class BookController extends Controller
     {
         //
     }
-
     /**
      * Store a newly created resource in storage.
      */
+
+
     public function store(Request $request)
     {
-       $data =  Book::create([
-        'title' => $request->title,
-        'writer' => $request->writer,
-        'publisher' => $request->publisher,
-        'publication_year' => $request->publication_year,
-        'category_id' => $request->category_id,
-        'img' => $request->img
-       ]);
-
         $this->validate($request, [
-            'img' => 'mimes:pdf'
+            'title' => 'required',
+            'publication_year' => 'required',
+            'category_id' => 'required',
+            'rak_id' => 'required',
+            'img' => 'required|mimes:jpg,jpeg,png'
         ]);
-        
-        $filename = 'book-' . time();
+        $bookId = Book::where('title', $request->title)->count();
+        $data =  Book::create([
+            'title' => $request->title,
+            'book_code' => $request->title . '-' . $request->publication_year . '-' . $bookId + 1,
+            'publication_year' => $request->publication_year,
+            'category_id' => $request->category_id,
+            'rak_id' => $request->rak_id,
+            'img' => $request->img
+        ]);
+
+        $filename = 'sampul-' . time();
         $extensi = $request->file('img')->getClientOriginalExtension();
         if ($request->hasFile('img')) {
             $file = $request->file('img')->move('storage/book/', $filename . '.' . $extensi);
             $data->img = $filename . '.' . $extensi;
         }
         $data->save();
-        return redirect('book');
+        return redirect('book')->with('success', 'data berhasil ditambahkan');
     }
 
     /**
@@ -76,7 +86,22 @@ class BookController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $filename = 'sampul-' . time();
+        $extensi = $request->file('img')->getClientOriginalExtension();
+        if ($request->hasFile('img')) {
+            $file = $request->file('img')->move('storage/book/', $filename . '.' . $extensi);
+        }
+        $book =  Book::where('id', $id)->first();
+        $file = public_path('/storage/book/' . $book->img);
+        unlink($file);
+        $book->update([
+            'title' => $request->title,
+            'publication_year' => $request->publication_year,
+            'category_id' => $request->category_id,
+            'rak_id' => $request->rak_id,
+            'img' => $filename . "." . $extensi
+        ]);
+        return redirect('book')->with('success', 'data berhasil diperbarui');
     }
 
     /**
@@ -84,6 +109,10 @@ class BookController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $book =  Book::where('id', $id)->first();
+        $file = public_path('/storage/book/' . $book->img);
+        unlink($file);
+        $book->delete();
+        return redirect('book')->with('success', 'Data Berhasil Dihapus');
     }
 }

@@ -17,7 +17,7 @@ class userController extends Controller
     public function index()
     {
         $role = Role::all();
-        $users = User::all();
+        $users = User::paginate(10);
         return view('user',compact('users','role'));
     }
 
@@ -34,7 +34,16 @@ class userController extends Controller
      */
     public function store(Request $request)
     {
-        User::create($request->all());
+        $this->validate($request,[
+        'full_name' => 'required',
+        'username' => 'required|unique:users',
+        'address' => 'required',
+        'email' => 'required|email|unique:users',
+        'role_id' => 'required',
+        'password' => 'required',
+         ]);
+
+        User::create($request->all())->with('success', 'Data Berhasil Dibuat');
         return redirect('user');
     }
 
@@ -64,10 +73,10 @@ class userController extends Controller
             'full_name' => $request->full_name,
             'username' => $request->username,
             'email' => $request->email,
-            'password' => $request->password,
+            'address' => $request->address,
             'role_id' => $request->role_id
         ]);
-        return redirect('user');
+        return redirect('user')->with('success','data berhasil diperbarui');;
     }
 
     /**
@@ -77,7 +86,7 @@ class userController extends Controller
     {
         $user = User::where('id',$id)->first();
         $user->delete();
-        return redirect('user')->with('succes', 'Data Berhasil Dihapus');
+        return redirect('user')->with('success', 'Data Berhasil Dihapus');
 
     }
 }

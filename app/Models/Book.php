@@ -9,10 +9,27 @@ class Book extends Model
 {
     use HasFactory;
     protected $fillable = [
-    'title',
-    'writer',
-    'publisher',
-    'category_id',
-    'publication_year',
-    'img'];
+        'title',
+        'book_code',
+        'category_id',
+        'rak_id',
+        'publication_year',
+        'img'
+    ];
+
+    public function category()
+    {
+        return $this->belongsTo(Categorie::class);
+    }
+    public function borrow()
+    {
+        return $this->hasOne(borrow::class);
+    }
+    public function rak()
+    {
+        return $this->belongsTo(Rak::class);
+    }
+    public function book(){
+        return $this->hasOne(Book::class);
+    }
 }

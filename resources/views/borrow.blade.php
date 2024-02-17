@@ -1,7 +1,7 @@
 @extends('layout')
 @section('container')
 @section('title')
-    Book
+    Borrow
 @endsection
     <!-- DataTables -->
 
@@ -11,12 +11,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Data Book</h1>
+                    <h1>Borrow</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">List Buku</li>
+                        <li class="breadcrumb-item active">Borrow</li>
                     </ol>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                         @endif
                         <button type="button" class="btn btn-primary mb-2" data-toggle="modal"
                             data-target="#modalCreate">
-                            Add Book
+                            Borrow
                         </button>
 
                         <!-- Modal Create book  -->
@@ -47,64 +47,69 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Add Buku</h5>
+                                        <h5 class="modal-title" id="exampleModalLabel">Borrow</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="{{ route('book.store') }}" method="POST"
+                                        <form action="{{ route('borrow.store') }}" method="POST"
                                             enctype="multipart/form-data">
                                             @csrf
                                             @method('POST')
                                             <div class="form-group">
-                                                <label for="">Title</label>
-                                                <input class="form-control @error('title') is-invalid @enderror"
-                                                    type="text" name="title" id="">
-                                                @error('title')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="">Category</label>
-                                                <select name="category_id" id=""
-                                                    class="form-control @error('category_id') is-invalid @enderror"">
-                                                    @foreach ($categories as $category)
-                                                        <option value="{{ $category->id }}">
-                                                            {{ $category->category_name }}</option>
+                                                <label for="">Borrower Name</label>
+                                                <select name="user_id" id=""
+                                                    class="form-control @error('user_id') is-invalid @enderror"">
+                                                    @foreach ($users as $user)
+                                                        <option value="{{ $user->id }}">
+                                                            {{ $user->full_name }}</option>
                                                     @endforeach
                                                 </select>
-                                                @error('category_id')
+                                                @error('user_id')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
                                             <div class="form-group">
-                                                <label for="">Rack</label>
-                                                <select name="rak_id"
-                                                    class="form-control @error('rak_id') is-invalid @enderror"
-                                                    id="">
-                                                    @foreach ($raks as $rak)
-                                                        <option value="{{ $rak->id }}">{{ $rak->name }}</option>
+                                                <label for="">Book</label>
+                                                <select name="book_id" id=""
+                                                    class="form-control @error('book_id') is-invalid @enderror"">
+                                                    @foreach ($books as $book)
+                                                        <option value="{{ $book->id }}">
+                                                            {{ $book->title }}</option>
                                                     @endforeach
                                                 </select>
-                                                @error('rak_id')
+                                                @error('book_id')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
                                             <div class="form-group">
-                                                <label for="">Publication Year</label>
+                                                <label for="">Borrow Date</label>
+                                                <input class="form-control @error('borrow_date') is-invalid @enderror""
+                                                    type="date" name="borrow_date" id="">
+                                                @error('borrow_date')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Date Of Return</label>
                                                 <input
-                                                    class="form-control @error('pubication_year') is-invalid @enderror""
-                                                    type="text" name="publication_year" id="">
-                                                @error('publication_year')
+                                                    class="form-control @error('date_of_return') is-invalid @enderror""
+                                                    type="date" name="date_of_return" id="">
+                                                @error('date_of_return')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
                                             <div class="form-group">
-                                                <label for="">File</label>
-                                                <input class="form-control @error('img') is-invalid @enderror""
-                                                    type="file" name="img" id="">
-                                                @error('img')
+                                                <label for="">Status</label>
+                                                <select name="status"
+                                                    class="form-control @error('status') is-invalid @enderror"
+                                                    id="">
+                                                    <option value="Pending">Pending</option>
+                                                    <option value="Borrowed">Borrowed</option>
+                                                    <option value="Borrowed">Returned</option>
+                                                </select>
+                                                @error('status')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
@@ -119,13 +124,13 @@
 
 
                         <!-- Modal view -->
-                        @foreach ($books as $book)
-                            <div class="modal fade" id="modalView{{ $book->id }}" tabindex="-1" role="dialog"
+                        {{-- @foreach ($borrows as $borrow)
+                            <div class="modal fade" id="modalView{{ $borrow->id }}" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Detail {{ $book->title }}
+                                            <h5 class="modal-title" id="exampleModalLabel">Detail {{ $borrow->title }}
                                             </h5>
                                             <button type="button" class="close" data-dismiss="modal"
                                                 aria-label="Close">
@@ -135,93 +140,107 @@
                                         <div class="modal-body">
                                             <div class="container">
                                                 <div class="row">
-                                                    <div class="col-md-6 text-center">
-                                                        <img src="{{ asset('storage/book/' . $book->img) }}"
-                                                            width="200px" height="270px" alt="">
-                                                    </div>
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-12">
                                                         <style>
                                                             .book_detail {
                                                                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
                                                                 font-size: 15px;
                                                             }
                                                         </style>
-                                                        <p class="book_detail">Title : {{ $book->title }}</p>
-                                                        <p class="book_detail">Book Code : {{ $book->book_code }}</p>
-                                                        <p class="book_detail">Category :
-                                                            {{ $book->category->category_name }}</p>
-                                                        <p class="book_detail">Raks :
-                                                            {{ $book->rak->name }}</p>
-                                                        <p class="book_detail">Publication Year :
-                                                            {{ $book->publication_year }}</p>
-                                                        <p class="book_detail">Stok :
-                                                            {{ $book->where('title', $book->title)->count() }}</p>
+                                                        <p class="book_detail">Borrower : {{ $borrow->user->title }}</p>
+                                                        <p class="book_detail">Book :
+                                                            {{ $borrow->book->title }}</p>
+                                                        <p class="book_detail">Borrow Da :
+                                                            {{ $borrow->publication_year }}</p>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <table border="0" collspan="0"
-                                                class="justify-content-center m-auto">
+                                                <table border="0" collspan="0"
+                                                    class="justify-content-center m-auto">
 
-                                            </table>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endforeach
+                        @endforeach --}}
                         {{-- end modal view --}}
 
                         {{-- modal update --}}
-                        @foreach ($books as $book)
-                            <div class="modal fade" id="modalUpdate{{ $book->id }}" tabindex="-1"
+                        @foreach ($borrows as $borrow)
+                            <div class="modal fade" id="modalUpdate{{ $borrow->id }}" tabindex="-1"
                                 role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Update Book</h5>
+                                            <h5 class="modal-title" id="exampleModalLabel">Loan Updates </h5>
                                             <button type="button" class="close" data-dismiss="modal"
                                                 aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="{{ route('book.update', $book->id) }}" method="POST"
+                                            <form action="{{ route('borrow.update', $borrow->id) }}" method="POST"
                                                 enctype="multipart/form-data">
                                                 @csrf
                                                 @method('PUT')
                                                 <div class="form-group">
-                                                    <label for="">Title</label>
-                                                    <input class="form-control" type="text" name="title"
-                                                        value="{{ $book->title }}" id="">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="">Category</label>
-                                                    <select name="category_id" id="" class="form-control">
-                                                        @foreach ($categories as $category)
-                                                            <option value="{{ $category->id }}">
-                                                                {{ $category->category_name }}</option>
+                                                    <label for="">Borrower Name</label>
+                                                    <select name="user_id" id=""
+                                                        class="form-control @error('user_id') is-invalid @enderror"">
+                                                        @foreach ($users as $user)
+                                                            <option value="{{ $user->id }}">
+                                                                {{ $user->full_name }}</option>
                                                         @endforeach
                                                     </select>
+                                                    @error('user_id')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="">Rack</label>
-                                                    <select name="rak_id" id="" class="form-control">
-                                                        <option value="{{$book->rak_id}}">{{$book->rak->name}}</option>
-                                                        @foreach ($raks as $rak)
-                                                            <option value="{{ $rak->id }}">
-                                                                {{ $rak->name }}</option>
+                                                    <label for="">Book</label>
+                                                    <select name="book_id" id=""
+                                                        class="form-control @error('book_id') is-invalid @enderror"">
+                                                        @foreach ($books as $book)
+                                                            <option value="{{ $book->id }}">
+                                                                {{ $book->title }}</option>
                                                         @endforeach
                                                     </select>
+                                                    @error('book_id')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="">Publication year</label>
-                                                    <input class="form-control" type="text"
-                                                        name="publication_year" value="{{ $book->publication_year }}"
+                                                    <label for="">Borrow Date</label>
+                                                    <input
+                                                        class="form-control @error('borrow_date') is-invalid @enderror""
+                                                        type="date" name="borrow_date" id=""
+                                                        value="{{ $borrow->borrow_date }}">
+                                                    @error('borrow_date')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Date Of Return</label>
+                                                    <input
+                                                        class="form-control @error('date_of_return') is-invalid @enderror""
+                                                        type="date" name="date_of_return" id=""
+                                                        value="{{ $borrow->date_of_return }}">
+                                                    @error('date_of_return')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Status</label>
+                                                    <select name="status"
+                                                        class="form-control @error('status') is-invalid @enderror"
                                                         id="">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="">File</label>
-                                                    <input class="form-control" type="file" name="img"
-                                                        value="{{ $book->img }}" id="">
+                                                        <option value="Pending">Pending</option>
+                                                        <option value="Borrowed">Borrowed</option>
+                                                        <option value="Borrowed">Returned</option>
+                                                    </select>
+                                                    @error('status')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
                                                 </div>
                                                 <button type="submit" class="btn btn-primary float-right">Save
                                                     changes</button>
@@ -234,22 +253,22 @@
                         {{-- end modal update --}}
 
                         {{-- modal delete --}}
-                        @foreach ($books as $book)
-                            <div class="modal fade" id="modalDelete{{ $book->id }}" tabindex="-1"
+                        @foreach ($borrows as $borrow)
+                            <div class="modal fade" id="modalDelete{{ $borrow->id }}" tabindex="-1"
                                 role="dialog" aria-hidden="true">
                                 <div class="modal-dialog ">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title">Delete {{ $book->title }} book</h5>
+                                            <h5 class="modal-title">Remove Borrowing {{ $borrow->title }} </h5>
                                             <button type="button" class="close"
                                                 data-dismiss="modal"><span>&times;</span></button>
                                         </div>
-                                        <form method="post" action="{{ route('book.destroy', $book->id) }}">
+                                        <form method="post" action="{{ route('borrow.destroy', $borrow->id) }}">
                                             @csrf
                                             @method('delete')
                                             <div class="modal-body">
                                                 <div class="form-group">
-                                                    <label>Do you want delete this book ?</label>
+                                                    <label>Do you want delete this ?</label>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
@@ -271,34 +290,35 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Title</th>
-                                        <th>Category</th>
-                                        <th>Stok</th>
-                                        <th>Image</th>
+                                        <th>Borrower</th>
+                                        <th>Book</th>
+                                        <th>Borrower Date</th>
+                                        <th>Date Of Return</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($books as $no => $book)
+                                    @foreach ($borrows as $no => $borrow)
                                         <tr>
-                                            <td style="width: 50px;">{{ $books->firstItem() + $no }}</td>
-                                            <td>{{ $book->title }}</td>
-                                            <td>{{ $book->category->category_name }}</td>
-                                            <td>{{ $book->where('title', $book->title)->count() }}</td>
-                                            <td><img src="{{ asset('storage/book/' . $book->img) }}" width="50px"
-                                                    alt=""></td>
+                                            <td style="width: 50px;">{{ $borrows->firstItem() + $no }}</td>
+                                            <td>{{ $borrow->user->full_name }}</td>
+                                            <td>{{ $borrow->book->title }}</td>
+                                            <td>{{ $borrow->borrow_date }}</td>
+                                            <td>{{ $borrow->date_of_return }}</td>
+                                            <td>{{ $borrow->status }}</td>
                                             <td style="width: 150px">
-                                                <button type="button" class="btn btn-success" data-toggle="modal"
-                                                    data-target="#modalView{{ $book->id }}">
+                                                {{-- <button type="button" class="btn btn-success" data-toggle="modal"
+                                                    data-target="#modalView{{ $borrow->id }}">
                                                     <i class="fa-solid fa-eye"></i>
-                                                </button>
+                                                </button> --}}
                                                 <button type="button" data-toggle="modal"
-                                                    data-target="#modalUpdate{{ $book->id }}"
+                                                    data-target="#modalUpdate{{ $borrow->id }}"
                                                     class="btn btn-warning">
                                                     <i class="fa-solid fa-pen"></i>
                                                 </button>
                                                 <button type="button" data-toggle="modal"
-                                                    data-target="#modalDelete{{ $book->id }}"
+                                                    data-target="#modalDelete{{ $borrow->id }}"
                                                     class="btn btn-danger">
                                                     <i class="fa-solid fa-trash"></i>
                                                 </button>
