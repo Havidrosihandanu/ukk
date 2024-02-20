@@ -3,9 +3,9 @@
 @section('title')
     Book
 @endsection
-    <!-- DataTables -->
+<!-- DataTables -->
 
-    <!-- Content Header (Page header) -->
+<!-- Content Header (Page header) -->
 @section('header')
     <div class="content-header">
         <div class="container-fluid">
@@ -196,6 +196,8 @@
                                                 <div class="form-group">
                                                     <label for="">Category</label>
                                                     <select name="category_id" id="" class="form-control">
+                                                        <option value="{{ $book->category_id }}">
+                                                            {{ $book->category->category_name }}</option>
                                                         @foreach ($categories as $category)
                                                             <option value="{{ $category->id }}">
                                                                 {{ $category->category_name }}</option>
@@ -205,7 +207,8 @@
                                                 <div class="form-group">
                                                     <label for="">Rack</label>
                                                     <select name="rak_id" id="" class="form-control">
-                                                        <option value="{{$book->rak_id}}">{{$book->rak->name}}</option>
+                                                        <option value="{{ $book->rak_id }}">{{ $book->rak->name }}
+                                                        </option>
                                                         @foreach ($raks as $rak)
                                                             <option value="{{ $rak->id }}">
                                                                 {{ $rak->name }}</option>
@@ -271,9 +274,10 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
+                                        <th>Book Code</th>
                                         <th>Title</th>
                                         <th>Category</th>
-                                        <th>Stok</th>
+                                        <th>Rak </th>
                                         <th>Image</th>
                                         <th>Action</th>
                                     </tr>
@@ -282,9 +286,10 @@
                                     @foreach ($books as $no => $book)
                                         <tr>
                                             <td style="width: 50px;">{{ $books->firstItem() + $no }}</td>
+                                            <td>{{ $book->book_code }}</td>
                                             <td>{{ $book->title }}</td>
                                             <td>{{ $book->category->category_name }}</td>
-                                            <td>{{ $book->where('title', $book->title)->count() }}</td>
+                                            <td>{{ $book->rak->name }}</td>
                                             <td><img src="{{ asset('storage/book/' . $book->img) }}" width="50px"
                                                     alt=""></td>
                                             <td style="width: 150px">

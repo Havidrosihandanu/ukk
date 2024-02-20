@@ -16,7 +16,7 @@ class ReviewController extends Controller
     {
         $books = Book::all();
         $users = User::all();
-        $reviews = Review::paginate(10);
+        $reviews = Review::paginate();
 
 
     return view('admin&operator.review',compact('books','users','reviews'));
@@ -36,18 +36,18 @@ class ReviewController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'user_id' => 'required',
-            'book_id' => 'required',
+            // 'user_id' => 'required',
+            // 'book_id' => 'required',
             'review' => 'required'
         ]);
 
         Review::create([
-            'user_id' => $request->user_id,
+            'user_id' => auth()->user()->id,
             'book_id' => $request->book_id,
             'review' => $request->review
         ]);
 
-        return redirect('review')->with('success', 'Data created successfully');
+        return redirect('borrowerr')->with('success', 'Data created successfully');
     }
 
     /**
@@ -93,6 +93,27 @@ class ReviewController extends Controller
     {
         $book =  Review::where('id', $id)->first();
         $book->delete();
-        return redirect('review')->with('success', 'Data Berhasil Dihapus');
+        return redirect('review')->with('success', 'Data Deleted Succesfully');
+    }
+    public function review(Request $request, $id)
+    {
+        $books = Book::where('id',$id)->get();
+        return view('borrower.review',compact('books'));
+    }
+    public function reviewPost(Request $request, $id)
+    {
+        $books = Book::where('id',$id)->get();
+        $this->validate($request, [
+            // 'user_id' => 'required',
+            // 'book_id' => 'required',
+            'review' => 'required'
+        ]);
+
+        Review::create([
+            'user_id' => auth()->user()->id,
+            'book_id' => $id,
+            'review' => $request->review
+        ]);
+        return redirect('review',compact('books'))->with('success', 'Success add favorite');
     }
 }

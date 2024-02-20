@@ -80,9 +80,9 @@
 
                 <!-- /.social-auth-links -->
 
-                <p class="mb-0">
+                {{-- <p class="mb-0">
                     <a href="/registrasi" class="text-center">Registrasi </a>
-                </p>
+                </p> --}}
             </div>
             <!-- /.login-card-body -->
         </div>

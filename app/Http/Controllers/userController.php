@@ -18,7 +18,7 @@ class userController extends Controller
     {
         $role = Role::all();
         $users = User::paginate(10);
-        return view('admin&operator.user',compact('users','role'));
+        return view('admin&operator.user', compact('users', 'role'));
     }
 
     /**
@@ -34,15 +34,15 @@ class userController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-        'full_name' => 'required',
-        'address' => 'required',
-        'email' => 'required|email|unique:users',
-        'role_id' => 'required',
-        'password' => 'required',
-         ]);
+        $this->validate($request, [
+            'full_name' => 'required',
+            'address' => 'required',
+            'email' => 'required|email|unique:users',
+            'role_id' => 'required',
+            'password' => 'required',
+        ]);
 
-        User::create($request->all())->with('success', 'Data Berhasil Dibuat');
+        User::create($request->all())->with('success', 'Data Created Succesfully');
         return redirect('user');
     }
 
@@ -67,14 +67,14 @@ class userController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        User::where('id',$id)
-        ->update([
-            'full_name' => $request->full_name,
-            'email' => $request->email,
-            'address' => $request->address,
-            'role_id' => $request->role_id
-        ]);
-        return redirect('user')->with('success','data berhasil diperbarui');;
+        User::where('id', $id)
+            ->update([
+                'full_name' => $request->full_name,
+                'email' => $request->email,
+                'address' => $request->address,
+                'role_id' => $request->role_id
+            ]);
+        return redirect('user')->with('success', ' Data Updated Succesfully');;
     }
 
     /**
@@ -82,9 +82,8 @@ class userController extends Controller
      */
     public function destroy(string $id)
     {
-        $user = User::where('id',$id)->first();
+        $user = User::where('id', $id)->first();
         $user->delete();
-        return redirect('user')->with('success', 'Data Berhasil Dihapus');
-
+        return redirect('user')->with('success', 'Data Deleted Successfully');
     }
 }

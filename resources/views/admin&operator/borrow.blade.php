@@ -3,9 +3,9 @@
 @section('title')
     Borrow
 @endsection
-    <!-- DataTables -->
+<!-- DataTables -->
 
-    <!-- Content Header (Page header) -->
+<!-- Content Header (Page header) -->
 @section('header')
     <div class="content-header">
         <div class="container-fluid">
@@ -167,8 +167,8 @@
 
                         {{-- modal update --}}
                         @foreach ($borrows as $borrow)
-                            <div class="modal fade" id="modalUpdate{{ $borrow->id }}" tabindex="-1"
-                                role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="modalUpdate{{ $borrow->id }}" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -183,24 +183,6 @@
                                                 enctype="multipart/form-data">
                                                 @csrf
                                                 @method('PUT')
-                                                <div class="form-group">
-                                                    <label for="">Borrower Name</label>
-                                                    <input type="text" name="user_id" id=""
-                                                    class="form-control @error('user_id') is-invalid @enderror"" disabled value="{{$borrow->user->full_name}}">
-                                                    
-                                                    @error('user_id')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="">Book Title</label>
-                                                    <input type="text" name="book_id" id=""
-                                                    class="form-control @error('book_id') is-invalid @enderror"" disabled value="{{$borrow->book->title}}">
-                                                    
-                                                    @error('book_id')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
                                                 <div class="form-group">
                                                     <label for="">Borrow Date</label>
                                                     <input
@@ -228,7 +210,7 @@
                                                         id="">
                                                         <option value="Pending">Pending</option>
                                                         <option value="Borrowed">Borrowed</option>
-                                                        <option value="Borrowed">Returned</option>
+                                                        <option value="Returned">Returned</option>
                                                     </select>
                                                     @error('status')
                                                         <span class="text-danger">{{ $message }}</span>
@@ -246,8 +228,8 @@
 
                         {{-- modal delete --}}
                         @foreach ($borrows as $borrow)
-                            <div class="modal fade" id="modalDelete{{ $borrow->id }}" tabindex="-1"
-                                role="dialog" aria-hidden="true">
+                            <div class="modal fade" id="modalDelete{{ $borrow->id }}" tabindex="-1" role="dialog"
+                                aria-hidden="true">
                                 <div class="modal-dialog ">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -282,6 +264,7 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
+                                        <th>Borrow Code</th>
                                         <th>Borrower</th>
                                         <th>Book</th>
                                         <th>Borrower Date</th>
@@ -294,8 +277,9 @@
                                     @foreach ($borrows as $no => $borrow)
                                         <tr>
                                             <td style="width: 50px;">{{ $borrows->firstItem() + $no }}</td>
+                                            <td>{{ $borrow->borrow_code }}</td>
                                             <td>{{ $borrow->user->full_name }}</td>
-                                            <td>{{ $borrow->book->title }}</td>
+                                            <td>{{ $borrow->book_code }}</td>
                                             <td>{{ $borrow->borrow_date }}</td>
                                             <td>{{ $borrow->date_of_return }}</td>
                                             <td>{{ $borrow->status }}</td>

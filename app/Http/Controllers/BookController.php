@@ -3,13 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
-use App\Models\Bookcode;
 use App\Models\Categorie;
 use App\Models\Rak;
-use App\Models\Raks;
-use App\Models\Stok;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
@@ -52,6 +48,7 @@ class BookController extends Controller
             'publication_year' => $request->publication_year,
             'category_id' => $request->category_id,
             'rak_id' => $request->rak_id,
+            'status' => 'ready',
             'img' => $request->img
         ]);
 
@@ -62,7 +59,7 @@ class BookController extends Controller
             $data->img = $filename . '.' . $extensi;
         }
         $data->save();
-        return redirect('book')->with('success', 'data berhasil ditambahkan');
+        return redirect('book')->with('success', 'Data created successfully');
     }
 
     /**
@@ -101,7 +98,7 @@ class BookController extends Controller
             'rak_id' => $request->rak_id,
             'img' => $filename . "." . $extensi
         ]);
-        return redirect('book')->with('success', 'data berhasil diperbarui');
+        return redirect('book')->with('success', 'Data Updated successfully');
     }
 
     /**
@@ -113,6 +110,6 @@ class BookController extends Controller
         $file = public_path('/storage/book/' . $book->img);
         unlink($file);
         $book->delete();
-        return redirect('book')->with('success', 'Data Berhasil Dihapus');
+        return redirect('book')->with('success', 'Data Deleted successfully');
     }
 }

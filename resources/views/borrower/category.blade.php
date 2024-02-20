@@ -2,9 +2,6 @@
 <html lang="en">
 
 <head>
-
-    <style>
-    </style>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,20 +13,20 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 
     <!-- Bootstrap -->
-    <link type="text/css" rel="stylesheet" href="borrower/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="/borrower/css/bootstrap.min.css" />
 
     <!-- Slick -->
-    <link type="text/css" rel="stylesheet" href="borrower/css/slick.css" />
-    <link type="text/css" rel="stylesheet" href="borrower/css/slick-theme.css" />
+    <link type="text/css" rel="stylesheet" href="/borrower/css/slick.css" />
+    <link type="text/css" rel="stylesheet" href="/borrower/css/slick-theme.css" />
 
     <!-- nouislider -->
-    <link type="text/css" rel="stylesheet" href="borrower/css/nouislider.min.css" />
+    <link type="text/css" rel="stylesheet" href="/borrower/css/nouislider.min.css" />
 
     <!-- Font Awesome Icon -->
-    <link rel="stylesheet" href="borrower/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/borrower/css/font-awesome.min.css">
 
     <!-- Custom stlylesheet -->
-    <link type="text/css" rel="stylesheet" href="borrower/css/style.css" />
+    <link type="text/css" rel="stylesheet" href="/borrower/css/style.css" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -78,25 +75,15 @@
 
                     <!-- SEARCH BAR -->
                     <div class="col-md-6">
-                        {{-- <form action="/bagian1" method="get">
-                            @csrf
-                            <label for="">Search</label>
-                            <div class="row">
-                                <div class="col-md-8 col-sm-6">
-                                    <input class="form-control" type="search" name="search">
-                                </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <input class="btn btn-danger" type="submit" value="search">
-                                </div>
+                        <div class="header-search" style="width: 500px;">
+                            <div class="header-search" style="width: 600px;">
+                                <form action="/borrowerr" method="GET">
+                                    @csrf
+                                    <input class="input-select" style="width: 400px " value="{{ old('search') }}" name="search"
+                                        placeholder="Search here">
+                                    <input type="submit" class="search-btn" value="Search">
+                                </form>
                             </div>
-                        </form> --}}
-                        <div class="header-search" style="width: 600px;">
-                            <form action="/borrowerr" method="GET">
-                                @csrf
-                                <input class="input-select" style="width: 400px " value="{{ old('search') }}" name="search"
-                                    placeholder="Search here">
-                                <input type="submit" class="search-btn" value="Search">
-                            </form>
                         </div>
                     </div>
                     <!-- /SEARCH BAR -->
@@ -174,7 +161,100 @@
         <!-- container -->
         <div class="container">
             <!-- row -->
-            @yield('container')
+           
+    <div class="row">
+
+        @section('title')
+            Favorite Book
+        @endsection
+        @foreach ($books as $bookk)
+        <div class="col-md-12">
+            <div class="section-title">
+                <h3 class="title">{{$bookk->category->category_name}}</h3>
+                {{-- <div class="section-nav">
+                        <ul class="section-tab-nav tab-nav">
+                            <li class="active"><a data-toggle="tab" href="#tab1">Novel</a></li>
+                            <li><a data-toggle="tab" href="#tab1">Biografi</a></li>
+                            <li><a data-toggle="tab" href="#tab1">Fiksi</a></li>
+                            <li><a data-toggle="tab" href="#tab1">Pelajaran</a></li>
+                        </ul>
+                    </div> --}}
+            </div>
+        </div>
+        @endforeach
+        <div class="row">
+            <div class="container">
+                @foreach ($books as $bookk)
+                    <div class="col-md-3">
+                        <div class="product">
+                            <div class="product-img">
+                                <img src="{{ asset('storage/book/' . $bookk->img) }}" width="200px" height="270px"
+                                    alt="">
+                                <div class="product-label">
+                                    <span class="sale">book</span>
+                                </div>
+                            </div>
+                            <div class="product-body">
+                                <h3 class="product-name"><a href="#">{{ $bookk->title }}</a></h3>
+                                <div class="product-rating">
+                                </div>
+                                <div class="product-btns">
+                                    <button type="button" data-toggle="modal" data-target="#modalView{{ $bookk->id }}"
+                                        class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">
+                                            view</span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+        <!-- /product -->
+        @foreach ($books as $book)
+            <div class="modal fade" id="modalView{{ $book->id }}" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">View {{ $book->title }} Book</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6 text-center">
+                                    <img src="{{ asset('storage/book/' . $book->img) }}" width="200px"
+                                        height="270px" alt="">
+                                </div>
+                                <div class="col-md-6">
+                                    <style>
+                                        .book_detail {
+                                            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+                                            font-size: 15px;
+                                        }
+                                    </style>
+                                    <p class="book_detail">Title : {{ $book->title }}</p>
+                                    <p class="book_detail">Book Code : {{ $book->book_code }}</p>
+                                    <p class="book_detail">Category :
+                                        {{ $book->category->category_name }}</p>
+                                    <p class="book_detail">Raks :
+                                        {{ $book->rak->name }}</p>
+                                    <p class="book_detail">Publication Year :
+                                        {{ $book->publication_year }}</p>
+                                    {{-- <p class="book_detail">Stok :
+                                        {{ $book->where('title', $book->title)->count() }}</p> --}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+        <!-- Products tab & slick -->
+    </div>
+    @include('sweetalert::alert')
+    
             <!-- /row -->
         </div>
         <!-- /container -->
@@ -182,7 +262,7 @@
     <!-- /SECTION -->
 
     <!-- FOOTER -->
-    <footer id="footer" >
+    <footer id="footer">
         <!-- top footer -->
         <div class="section">
             <!-- container -->
@@ -206,47 +286,20 @@
         <!-- /top footer -->
 
         <!-- bottom footer -->
-        {{-- <div id="bottom-footer" class="section">
-            <div class="container">
-                <!-- row -->
-                <div class="row">
-                    <div class="col-md-12 text-center">
-                        <ul class="footer-payments">
-                            <li><a href="#"><i class="fa fa-cc-visa"></i></a></li>
-                            <li><a href="#"><i class="fa fa-credit-card"></i></a></li>
-                            <li><a href="#"><i class="fa fa-cc-paypal"></i></a></li>
-                            <li><a href="#"><i class="fa fa-cc-mastercard"></i></a></li>
-                            <li><a href="#"><i class="fa fa-cc-discover"></i></a></li>
-                            <li><a href="#"><i class="fa fa-cc-amex"></i></a></li>
-                        </ul>
-                        <span class="copyright">
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            Copyright &copy;
-                            <script>
-                                document.write(new Date().getFullYear());
-                            </script> All rights reserved | This template is made with <i
-                                class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com"
-                                target="_blank">Colorlib</a>
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        </span>
-                    </div>
-                </div>
-                <!-- /row -->
-            </div>
-            <!-- /container -->
-        </div> --}}
         <!-- /bottom footer -->
     </footer>
     <!-- /FOOTER -->
 
     <!-- jQuery Plugins -->
-    <script src="borrower/js/jquery.min.js"></script>
-    <script src="borrower/js/bootstrap.min.js"></script>
-    <script src="borrower/js/slick.min.js"></script>
-    <script src="borrower/js/nouislider.min.js"></script>
-    <script src="borrower/js/jquery.zoom.min.js"></script>
-    <script src="borrower/js/main.js"></script>
+    <script src="/borrower/js/jquery.min.js"></script>
+    <script src="/borrower/js/bootstrap.min.js"></script>
+    <script src="/borrower/js/slick.min.js"></script>
+    <script src="/borrower/js/nouislider.min.js"></script>
+    <script src="/borrower/js/jquery.zoom.min.js"></script>
+    <script src="/borrower/js/main.js"></script>
 
 </body>
 
 </html>
+
+

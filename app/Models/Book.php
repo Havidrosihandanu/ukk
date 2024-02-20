@@ -13,6 +13,7 @@ class Book extends Model
         'book_code',
         'category_id',
         'rak_id',
+        'status',
         'publication_year',
         'img'
     ];
@@ -31,5 +32,8 @@ class Book extends Model
     }
     public function book(){
         return $this->hasOne(Book::class);
+    }
+    public function review(){
+        return $this->hasOne(Review::class);
     }
 }

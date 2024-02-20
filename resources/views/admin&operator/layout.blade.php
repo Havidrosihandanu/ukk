@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+<link rel="icon" type="image/x-icon" href="/logo perpus.png">
     <title>
-        @yield('title')
+       SI PUSTAKA | @yield('title')
     </title>
 
     <!-- Google Font: Source Sans Pro -->
@@ -105,9 +105,9 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="index3.html" class="brand-link">
-                <img src="/perpus.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+                <img src="/logo perpus.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
                     style="opacity: .8">
-                <span class="brand-text a nt-weight-light">SI INPUS</span>
+                <span class="brand-text a nt-weight-light">SI PUSTAKA</span>
             </a>
 
             <!-- Sidebar -->
@@ -115,8 +115,7 @@
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="/avatar5.png" class="img-circle elevation-2"
-                            alt="User Image">
+                        <img src="/avatar5.png" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
                         <a href="#" class="d-block">{{ auth()->user()->full_name }} </a>
@@ -141,44 +140,35 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
                         <li class="nav-item ">
-                            <a href="/" class="nav-link {{ request()->is('/') ? 'active' : '' }} ">
+                            <a href="/dashboardd" class="nav-link {{ request()->is('/') ? 'active' : '' }} ">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
                         @can('admin')
-                        <li class="nav-item active">
-                            <a href="/user" class="nav-link {{ request()->is('user') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-solid fa-user"></i>
-                                <p>User</p>
-                            </a>
-                        </li>
+                            <li class="nav-item active">
+                                <a href="/user" class="nav-link {{ request()->is('user') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-solid fa-user"></i>
+                                    <p>User</p>
+                                </a>
+                            </li>
                         @endcan
                         <li class="nav-item ">
                             <a href="/book" class="nav-link {{ Request::is('book') ? 'active' : '' }} ">
-                                <i class="nav-icon fa fa-book""></i>
+                                <i class="nav-icon fa fa-book"></i>
                                 <p>Book</p>
                             </a>
                         </li>
-                      @can('operator')
-                      <li class="nav-item">
-                        <a href="#" class="nav-link {{ Request::is('borrow') ? 'active' : '' }} ">
-                            <i class="nav-icon fa fa-exchange"></i>
-                            <p>
-                                Transaction
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview" style="display: none;">
+                        <li>
+                            @can('operator')
                             <li class="nav-item">
                                 <a href="/borrow" class="nav-link {{ Request::is('borrow') ? 'active' : '' }} ">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Borrow Confirmation</p>
+                                    <i class="nav-icon fa fa-exchange"></i>
+                                    <p>Borrow Confirmation </p>
                                 </a>
                             </li>
-                        </ul>
-                    </li>
-                      @endcan
+                        @endcan
+                        </li>
                         <li class="nav-item ">
                             <a href="/report" class="nav-link {{ Request::is('report') ? 'active' : '' }} ">
                                 <i class="nav-icon fas fa-table "></i>
@@ -187,7 +177,7 @@
                         </li>
                         <li class="nav-item ">
                             <a href="/review" class="nav-link {{ Request::is('review') ? 'active' : '' }} ">
-                                <i class="nav-icon fas fa-table "></i>
+                                <i class="nav-icon fa fa-comments-o"></i>
                                 <p>Review</p>
                             </a>
                             {{-- <a class="dropdown-item">
@@ -200,13 +190,14 @@
                                 </a> --}}
                         </li>
                         <li class="nav-item ">
-                            <form action="/logout" method="POST">
+                            <form action="/logout" method="POST"
+                                class="nav-link {{ Request::is('logout') ? 'active' : '' }} ">
                                 @method('post')
                                 @csrf
                                 <button type="submit"
-                                    style="border: none;background-color: rgba(255, 255, 255, 0)"><i
-                                        class="ti-power-off text-primary"></i>  Logout</button>
-                              
+                                    style="color: rgb(194, 199, 208); border: none;background-color: rgba(255, 255, 255, 0)"><i
+                                        class="fa fa-sign-out"></i>Logout</button>
+
                             </form>
                         </li>
                         {{-- <li class="nav-item ">

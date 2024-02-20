@@ -12,7 +12,7 @@ class   BorrowController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $borrows = Borrow::paginate();
         $users = User::all();
@@ -20,7 +20,7 @@ class   BorrowController extends Controller
         return view('admin&operator.borrow', compact('borrows', 'users', 'books'));
     }
 
-   
+
     /**
      * Show the form for creating a new resource.
      */
@@ -52,7 +52,7 @@ class   BorrowController extends Controller
         return redirect('borrow')->with('success', 'Data created successfully');
     }
 
-    
+
 
     /**
      * Display the specified resource.
@@ -75,17 +75,12 @@ class   BorrowController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $this->validate($request, [
-            'user_id' => 'required',
-            'book_id' => 'required',
-            // 'borrow_data' => 'required',
-            // 'data_of_return' => 'required',
-            'status' => 'required',
-        ]);
         $borrow = Borrow::where('id', $id)->first();
+        $book = Book::where('book_code',$borrow->book_code)->first();
+        $book->update([
+            'status' => $request->status
+        ]);
         $borrow->update([
-            'user_id' => $request->user_id,
-            'book_id' => $request->book_id,
             'borrow_date' => $request->borrow_date,
             'date_of_return' => $request->date_of_return,
             'status' => $request->status,
@@ -101,13 +96,20 @@ class   BorrowController extends Controller
     {
         $book =  Borrow::where('id', $id)->first();
         $book->delete();
-        return redirect('borrow')->with('success', 'Data Berhasil Dihapus');
+        return redirect('borrow')->with('success', 'Data Deleted successfully');
     }
 
-    public function report(){
-        $borrows = Borrow::paginate();
+    public function report(Request $request)
+    {
+        // $bookAll = Book::where('title', 'like', "%" . $search . "%")
+        // ->where('status','!=','borrowed')->get();
         $users = User::all();
         $books = Book::all();
+        if ($request->has('borrow_date')) {
+            $borrows = Borrow::whereBetween('borrow_date', [$request->borrow_date, $request->end_date])->paginate();
+        } else {
+            $borrows = Borrow::paginate();
+        }
         return view('admin&operator.report', compact('borrows', 'users', 'books'));
     }
 }

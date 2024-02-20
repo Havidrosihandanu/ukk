@@ -28,22 +28,22 @@ class LoginController extends Controller
      */
     public function store(Request $request)
     {
-        $credentials = $request -> validate([
+        $credentials = $request->validate([
             'email' => 'required',
             'password' => 'required'
         ]);
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            if(Auth::user()->role_id == 1 ){
-                return redirect()->intended('/user')->with('success','berhasil login');
-            }elseif(Auth::user()->role_id == 2 ){
-                return redirect()->intended('/book')->with('success','berhasil login');
-            }else{
-                return redirect()->intended('/borrower')->with('success','berhasil login');
+            if (Auth::user()->role_id == 1) {
+                return redirect()->intended('/dashboardd')->with('success', 'Login Successfully');
+            } elseif (Auth::user()->role_id == 2) {
+                return redirect()->intended('/dashboardd')->with('success', 'Login Successfully');
+            } else {
+                return redirect()->intended('/borrowerr')->with('success', 'Login Successfully');
             }
         }
-        return back()->with('loginerror','username / password tidak sesuai !!');
+        return back()->with('loginerror', 'username or password not found !!');
     }
 
     /**
@@ -78,7 +78,8 @@ class LoginController extends Controller
         //
     }
 
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

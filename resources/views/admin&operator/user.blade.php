@@ -3,9 +3,9 @@
 @section('title')
     User
 @endsection
-    <!-- DataTables -->
+<!-- DataTables -->
 
-    <!-- Content Header (Page header) -->
+<!-- Content Header (Page header) -->
 @section('header')
     <div class="content-header">
         <div class="container-fluid">
@@ -52,44 +52,49 @@
                                             @csrf
                                             <div class="form-group">
                                                 <label for="">Full Name</label>
-                                                <input class="form-control @error('full_name') is-invalid @enderror" type="text"  name="full_name" id="">
+                                                <input class="form-control @error('full_name') is-invalid @enderror"
+                                                    type="text" name="full_name" id="">
                                                 @error('full_name')
-                                                    <span class="text-danger">{{$message}}</span>
+                                                    <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
                                             <div class="form-group">
                                                 <label for="">Email</label>
-                                                <input class="form-control @error('email') is-invalid @enderror" type="email" name="email" id="">
+                                                <input class="form-control @error('email') is-invalid @enderror"
+                                                    type="email" name="email" id="">
                                                 @error('email')
-                                                    <span class="text-danger">{{$message}}</span>
+                                                    <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
                                             <div class="form-group">
                                                 <label for="">Password</label>
-                                                <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" id="">
+                                                <input class="form-control @error('password') is-invalid @enderror"
+                                                    type="password" name="password" id="">
                                                 @error('password')
-                                                <span class="text-danger">{{$message}}</span>
-                                            @enderror
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                             <div class="form-group">
                                                 <label for="">Address</label>
-                                                <input class="form-control @error('password') is-invalid @enderror" type="text" name="address"id="">
+                                                <input class="form-control @error('password') is-invalid @enderror"
+                                                    type="text" name="address"id="">
                                                 @error('address')
-                                                <span class="text-danger">{{$message}}</span>
-                                            @enderror
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                             <div class="form-group">
                                                 <label for="">Role</label>
-                                                <select class="form-control @error('password') is-invalid @enderror" name="role_id" id="">
-                                                    <option value="" > Select role : </option>
+                                                <select class="form-control @error('password') is-invalid @enderror"
+                                                    name="role_id" id="">
+                                                    <option value=""> Select role : </option>
                                                     @foreach ($role as $roles)
                                                         <option value="{{ $roles->id }}" class="form-control">
                                                             {{ $roles->role }}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('address')
-                                                <span class="text-danger">{{$message}}</span>
-                                            @enderror
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                             <button type="submit" class="btn btn-success float-right">Save
                                                 changes</button>
@@ -166,7 +171,7 @@
                                                     <button type="button" class="btn btn-secondary"
                                                         data-dismiss="modal"><i class="fa fa-undo"></i>Close</button>
                                                     <button type="submit" class="btn btn-danger"><i
-                                                            class="fa fa-trash"></i>Delete```</button>
+                                                            class="fa fa-trash"></i>Delete</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -183,7 +188,8 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Update Data  {{ $user->full_name }}</h5>
+                                            <h5 class="modal-title" id="exampleModalLabel">Update Data
+                                                {{ $user->full_name }}</h5>
                                             <button type="button" class="close" data-dismiss="modal"
                                                 aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
@@ -211,7 +217,8 @@
                                                 <div class="form-group">
                                                     <label for="">Role</label>
                                                     <select class="form-control" name="role_id" id="">
-                                                        <option value="{{$user->role->id}}">{{$user->role->role}}</option>
+                                                        <option value="{{ $user->role->id }}">{{ $user->role->role }}
+                                                        </option>
                                                         @foreach ($role as $roles)
                                                             <option value="{{ $roles->id }}" class="form-control">
                                                                 {{ $roles->role }}</option>
@@ -270,7 +277,7 @@
                             </table>
                         </div>
                         {{-- end user table --}}
-                        
+
                         <!-- /.card-body -->
                     </div>
                 </div>

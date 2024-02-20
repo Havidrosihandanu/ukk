@@ -3,9 +3,9 @@
 @section('title')
     Report
 @endsection
-    <!-- DataTables -->
+<!-- DataTables -->
 
-    <!-- Content Header (Page header) -->
+<!-- Content Header (Page header) -->
 @section('header')
     <div class="content-header">
         <div class="container-fluid">
@@ -31,8 +31,31 @@
             <div class="col-12">
                 <div class="card">
                     <!-- /.card-header -->
-                    <div class="card-body">
 
+                    <form action="/report" method="GET">
+                        <div class="row">
+                            @csrf
+                            <div class="col-md-2">
+                                <div class="form-group m-4">
+                                    <label for="">Tanggal Awal</label>
+                                    <input name="borrow_date" type="date" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group m-4">
+                                    <label for="">Tanggal Akhir</label>
+                                    <input name="end_date" type="date" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group mt-5">
+                                <div class="col-md-4 mt-2">
+                                    <button type="submit" class="btn btn-primary">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="card-body">
                         @if (count($errors) > 0)
                             <div class="alert alert-danger"> {{ $errors->first() }} </div>
                         @endif

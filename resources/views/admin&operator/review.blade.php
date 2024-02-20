@@ -171,7 +171,7 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <div class="modal-body"> 
+                                        <div class="modal-body">
                                             <form action="{{ route('review.update', $review->id) }}" method="POST">
                                                 @method('PUT')
                                                 @csrf
@@ -233,19 +233,19 @@
                                     @foreach ($reviews as $no => $review)
                                         <tr>
                                             <td style="width: 50px;">{{ $reviews->firstItem() + $no }}</td>
-                                            <td>{{ $review->user_id }}</td>
-                                            <td>{{ $review->book_id }}</td>
+                                            <td>{{ $review->user->full_name }}</td>
+                                            <td>{{ $review->book->title }}</td>
                                             <td>{{ $review->review }}</td>
                                             <td style="width: 150px">
                                                 <button type="button" class="btn btn-success" data-toggle="modal"
                                                     data-target="#modalView{{ $review->id }}">
                                                     <i class="fa-solid fa-eye"></i>
                                                 </button>
-                                                <button type="button" data-toggle="modal"
+                                                {{-- <button type="button" data-toggle="modal"
                                                     data-target="#modalUpdate{{ $review->id }}"
                                                     class="btn btn-warning">
                                                     <i class="fa-solid fa-pen"></i>
-                                                </button>
+                                                </button> --}}
                                                 <button type="button" data-toggle="modal"
                                                     data-target="#modalDelete{{ $review->id }}"
                                                     class="btn btn-danger">
