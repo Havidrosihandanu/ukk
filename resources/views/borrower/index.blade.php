@@ -61,10 +61,10 @@
                                                 view</span></button>
                                     </div>
                                 </div>
-                                <div class="add-to-cart">
+                                {{-- <div class="add-to-cart">
                                     <a href="/borrows/{{ $book->book_code }}/{{$book->id}}" class="add-to-cart-btn"
                                         style="height: 50px ;!important"> borrow </a>
-                                </div>
+                                </div> --}}
                             </div>
                         @endforeach
                         <!-- /product -->

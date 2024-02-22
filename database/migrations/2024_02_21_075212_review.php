@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('roles', function (Blueprint $table) {
-            $table->integer('id')->primary();
-            $table->string('role');
-           
+        Schema::create('reviews', function (Blueprint $table) {
+            $table->id('id');
+            $table->integer('user_id');
+            $table->integer('book_id');
+            $table->string('review');
+            $table->timestamps();
         });
     }
 
@@ -23,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('reviews');
     }
 };

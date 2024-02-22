@@ -75,14 +75,6 @@
                                                 @enderror
                                             </div>
                                             <div class="form-group">
-                                                <label for="">Address</label>
-                                                <input class="form-control @error('password') is-invalid @enderror"
-                                                    type="text" name="address"id="">
-                                                @error('address')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group">
                                                 <label for="">Role</label>
                                                 <select class="form-control @error('password') is-invalid @enderror"
                                                     name="role_id" id="">
@@ -92,7 +84,7 @@
                                                             {{ $roles->role }}</option>
                                                     @endforeach
                                                 </select>
-                                                @error('address')
+                                                @error('role_id')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
@@ -132,10 +124,6 @@
                                                 <tr>
                                                     <td class="td_view">Email</td>
                                                     <td class="">: {{ $user->email }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="td_view">Address</td>
-                                                    <td class="">: {{ $user->address }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="td_view">Role</td>
@@ -208,11 +196,6 @@
                                                     <label for="">Email</label>
                                                     <input class="form-control" type="email" name="email"
                                                         id="" value="{{ $user->email }}">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="">Address</label>
-                                                    <input class="form-control" type="text" name="address"
-                                                        id="" value="{{ $user->address }}">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="">Role</label>

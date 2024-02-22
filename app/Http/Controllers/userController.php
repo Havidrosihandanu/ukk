@@ -18,7 +18,12 @@ class userController extends Controller
     {
         $role = Role::all();
         $users = User::paginate(10);
+
+        if (auth()->user()->role_id != 3) {
         return view('admin&operator.user', compact('users', 'role'));
+        }else{
+            return abort(403);
+        }
     }
 
     /**
@@ -36,7 +41,6 @@ class userController extends Controller
     {
         $this->validate($request, [
             'full_name' => 'required',
-            'address' => 'required',
             'email' => 'required|email|unique:users',
             'role_id' => 'required',
             'password' => 'required',
@@ -71,7 +75,6 @@ class userController extends Controller
             ->update([
                 'full_name' => $request->full_name,
                 'email' => $request->email,
-                'address' => $request->address,
                 'role_id' => $request->role_id
             ]);
         return redirect('user')->with('success', ' Data Updated Succesfully');;

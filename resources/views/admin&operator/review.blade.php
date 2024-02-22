@@ -32,12 +32,12 @@
                 <div class="card">
                     <!-- /.card-body -->
                     <div class="card-body">
-                        <button type="button" class="btn btn-primary mb-2" data-toggle="modal"
+                        {{-- <button type="button" class="btn btn-primary mb-2" data-toggle="modal"
                             data-target="#modalCreate">
                             Add Review
-                        </button>
+                        </button> --}}
                         <!-- Modal create -->
-                        <div class="modal fade" id="modalCreate" tabindex="-1" role="dialog"
+                        {{-- <div class="modal fade" id="modalCreate" tabindex="-1" role="dialog"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
@@ -86,11 +86,11 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         {{-- end modal create --}}
 
                         <!-- Modal view -->
-                        @foreach ($reviews as $review)
+                        {{-- @foreach ($reviews as $review)
                             <div class="modal fade" id="modalView{{ $review->id }}" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
@@ -122,7 +122,7 @@
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                        @endforeach --}}
                         {{-- end modal view --}}
 
                         {{-- modal delete --}}
@@ -158,7 +158,7 @@
                         {{-- end modal delete --}}
 
                         {{-- modal update --}}
-                        @foreach ($reviews as $review)
+                        {{-- @foreach ($reviews as $review)
                             <div class="modal fade" id="modalUpdate{{ $review->id }}" tabindex="-1"
                                 role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
@@ -214,7 +214,7 @@
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                        @endforeach --}}
                         {{-- end modal update --}}
 
                         {{-- user table --}}
@@ -237,10 +237,10 @@
                                             <td>{{ $review->book->title }}</td>
                                             <td>{{ $review->review }}</td>
                                             <td style="width: 150px">
-                                                <button type="button" class="btn btn-success" data-toggle="modal"
+                                                {{-- <button type="button" class="btn btn-success" data-toggle="modal"
                                                     data-target="#modalView{{ $review->id }}">
                                                     <i class="fa-solid fa-eye"></i>
-                                                </button>
+                                                </button> --}}
                                                 {{-- <button type="button" data-toggle="modal"
                                                     data-target="#modalUpdate{{ $review->id }}"
                                                     class="btn btn-warning">

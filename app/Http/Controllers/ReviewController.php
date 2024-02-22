@@ -18,8 +18,11 @@ class ReviewController extends Controller
         $users = User::all();
         $reviews = Review::paginate();
 
-
-    return view('admin&operator.review',compact('books','users','reviews'));
+        if (auth()->user()->role_id != 3) {
+        return view('admin&operator.review', compact('books', 'users', 'reviews'));
+        }else{
+            return abort(403);
+        }
     }
 
     /**
@@ -36,8 +39,6 @@ class ReviewController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            // 'user_id' => 'required',
-            // 'book_id' => 'required',
             'review' => 'required'
         ]);
 
@@ -97,15 +98,13 @@ class ReviewController extends Controller
     }
     public function review(Request $request, $id)
     {
-        $books = Book::where('id',$id)->get();
-        return view('borrower.review',compact('books'));
+        $books = Book::where('id', $id)->get();
+        return view('borrower.review', compact('books'));
     }
     public function reviewPost(Request $request, $id)
     {
-        $books = Book::where('id',$id)->get();
+        $books = Book::where('id', $id)->get();
         $this->validate($request, [
-            // 'user_id' => 'required',
-            // 'book_id' => 'required',
             'review' => 'required'
         ]);
 
@@ -114,6 +113,6 @@ class ReviewController extends Controller
             'book_id' => $id,
             'review' => $request->review
         ]);
-        return redirect('review',compact('books'))->with('success', 'Success add favorite');
+        return view('borrower.review', compact('books'))->with("success", "Review Successfuly Added");
     }
 }

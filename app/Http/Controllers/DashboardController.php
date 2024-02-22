@@ -11,10 +11,15 @@ class DashboardController extends Controller
 {
     public function dashboard()
     {
-        $user = User::count();
+        $user = User::where('role_id', 3)->count();
         $book = Book::count();
-        $totalBorrowing = Borrow::count();
-        $bookBorrowed = Borrow::where('status', 'borrowed')->count();
-        return view('admin&operator.dashboard',compact('user','book','totalBorrowing','bookBorrowed'));
+        $report = Borrow::count();
+        $bookBorrowed = Borrow::where('status', 'Borrowed')->count();
+
+        if (auth()->user()->role_id != 3) {
+            return view('admin&operator.dashboard', compact('user', 'book', 'report', 'bookBorrowed'));
+        } else {
+           return abort(403);
+        }
     }
 }

@@ -19,12 +19,12 @@
 
 <body class="hold-transition login-page">
     <div class="login-box">
-        <div class="login-logo">
-            <a href="../../index2.html"><b>Login</b></a>
-        </div>
         <!-- /.login-logo -->
         <div class="card">
             <div class="card-body login-card-body">
+                <div class="login-logo">
+                    <a><b>Login</b></a>
+                </div>
                 <p class="login-box-msg">Sign in to start your session</p>
                 @if (session()->has('loginerror'))
                     <label>
@@ -36,15 +36,6 @@
                 @endif
                 <form action="{{ route('login.store') }}" method="post">
                     @csrf
-                    {{-- <div class="form-group">
-                        <label for="">Full Name</label>
-                        <input class="form-control @error('user_id') is-invalid @enderror"
-                            type="text" name="user_id" id=""
-                            value="{{ $review->user_id }}">
-                        @error('user_id')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div> --}}
                     <div class="input-group mb-3">
                         <input type="text" class="form-control @error('email') is-invalid @enderror"
                             placeholder="Email" name="email">
@@ -77,12 +68,6 @@
                         <!-- /.col -->
                     </div>
                 </form>
-
-                <!-- /.social-auth-links -->
-
-                {{-- <p class="mb-0">
-                    <a href="/registrasi" class="text-center">Registrasi </a>
-                </p> --}}
             </div>
             <!-- /.login-card-body -->
         </div>

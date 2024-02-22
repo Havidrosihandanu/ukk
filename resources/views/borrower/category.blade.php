@@ -50,7 +50,7 @@
         <?php
         use App\Models\Categorie;
         $categories = Categorie::all();
-
+        
         use App\Models\Favorite;
         use App\Models\Borrow;
         $userId = auth()->user()->id;
@@ -67,7 +67,8 @@
                     <div class="col-md-3">
                         <div class="header-logo">
                             <a href="/borrowerr" class="logo">
-                                <img src=" /borrower.png" style="margin-top: 8px" alt="" width="220px" height="60px"> 
+                                <img src=" /borrower.png" style="margin-top: 8px" alt="" width="220px"
+                                    height="60px">
                             </a>
                         </div>
                     </div>
@@ -79,8 +80,8 @@
                             <div class="header-search" style="width: 600px;">
                                 <form action="/borrowerr" method="GET">
                                     @csrf
-                                    <input class="input-select" style="width: 400px " value="{{ old('search') }}" name="search"
-                                        placeholder="Search here">
+                                    <input class="input-select" style="width: 400px " value="{{ old('search') }}"
+                                        name="search" placeholder="Search here">
                                     <input type="submit" class="search-btn" value="Search">
                                 </form>
                             </div>
@@ -145,7 +146,8 @@
                 <!-- NAV -->
                 <ul class="main-nav nav navbar-nav">
                     @foreach ($categories as $category)
-                    <li><a type="button" href="/category/{{{$category->id}}}">{{$category->category_name}}</a></li>
+                        <li><a type="button" href="/category/{{ $category->id }}">{{ $category->category_name }}</a>
+                        </li>
                     @endforeach
                 </ul>
                 <!-- /NAV -->
@@ -161,100 +163,88 @@
         <!-- container -->
         <div class="container">
             <!-- row -->
-           
-    <div class="row">
 
-        @section('title')
-            Favorite Book
-        @endsection
-        @foreach ($books as $bookk)
-        <div class="col-md-12">
-            <div class="section-title">
-                <h3 class="title">{{$bookk->category->category_name}}</h3>
-                {{-- <div class="section-nav">
-                        <ul class="section-tab-nav tab-nav">
-                            <li class="active"><a data-toggle="tab" href="#tab1">Novel</a></li>
-                            <li><a data-toggle="tab" href="#tab1">Biografi</a></li>
-                            <li><a data-toggle="tab" href="#tab1">Fiksi</a></li>
-                            <li><a data-toggle="tab" href="#tab1">Pelajaran</a></li>
-                        </ul>
-                    </div> --}}
-            </div>
-        </div>
-        @endforeach
-        <div class="row">
-            <div class="container">
-                @foreach ($books as $bookk)
-                    <div class="col-md-3">
-                        <div class="product">
-                            <div class="product-img">
-                                <img src="{{ asset('storage/book/' . $bookk->img) }}" width="200px" height="270px"
-                                    alt="">
-                                <div class="product-label">
-                                    <span class="sale">book</span>
+            <div class="row">
+
+                @section('title')
+                    Favorite Book
+                @endsection
+                <div class="row">
+                    <div class="container">
+                        @foreach ($books as $bookk)
+                            <div class="col-md-3">
+                                <div class="product">
+                                    <div class="product-img">
+                                        <img src="{{ asset('storage/book/' . $bookk->img) }}" width="200px"
+                                            height="270px" alt="">
+                                        <div class="product-label">
+                                            <span class="sale">{{ $bookk->category->category_name }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="product-body">
+                                        <h3 class="product-name"><a href="#">{{ $bookk->title }}</a></h3>
+                                        <div class="product-rating">
+                                        </div>
+                                        <div class="product-btns">
+                                            <button type="button" data-toggle="modal"
+                                                data-target="#modalView{{ $bookk->id }}" class="quick-view"><i
+                                                    class="fa fa-eye"></i><span class="tooltipp">
+                                                    view</span></button>
+                                                    <a href="/borrows/{{ $bookk->book_code }}/{{$bookk->id}}" class="add-to-cart-btn"
+                                                        style="height: 50px ;!important"> borrow </a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="product-body">
-                                <h3 class="product-name"><a href="#">{{ $bookk->title }}</a></h3>
-                                <div class="product-rating">
+                        @endforeach
+                    </div>
+                </div>
+                <!-- /product -->
+                @foreach ($books as $book)
+                    <div class="modal fade" id="modalView{{ $book->id }}" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">View {{ $book->title }} Book</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
                                 </div>
-                                <div class="product-btns">
-                                    <button type="button" data-toggle="modal" data-target="#modalView{{ $bookk->id }}"
-                                        class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">
-                                            view</span></button>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-6 text-center">
+                                            <img src="{{ asset('storage/book/' . $book->img) }}" width="200px"
+                                                height="270px" alt="">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <style>
+                                                .book_detail {
+                                                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+                                                    font-size: 15px;
+                                                }
+                                            </style>
+                                            <p class="book_detail">Title : {{ $book->title }}</p>
+                                            <p class="book_detail">Book Code : {{ $book->book_code }}</p>
+                                            <p class="book_detail">Category :
+                                                {{ $book->category->category_name }}</p>
+                                            <p class="book_detail">Raks :
+                                                {{ $book->rak->name }}</p>
+                                            <p class="book_detail">Publication Year :
+                                                {{ $book->publication_year }}</p>
+                                            {{-- <p class="book_detail">Stok :
+                                        {{ $book->where('title', $book->title)->count() }}</p> --}}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 @endforeach
+                <!-- Products tab & slick -->
             </div>
-        </div>
-        <!-- /product -->
-        @foreach ($books as $book)
-            <div class="modal fade" id="modalView{{ $book->id }}" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">View {{ $book->title }} Book</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-md-6 text-center">
-                                    <img src="{{ asset('storage/book/' . $book->img) }}" width="200px"
-                                        height="270px" alt="">
-                                </div>
-                                <div class="col-md-6">
-                                    <style>
-                                        .book_detail {
-                                            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
-                                            font-size: 15px;
-                                        }
-                                    </style>
-                                    <p class="book_detail">Title : {{ $book->title }}</p>
-                                    <p class="book_detail">Book Code : {{ $book->book_code }}</p>
-                                    <p class="book_detail">Category :
-                                        {{ $book->category->category_name }}</p>
-                                    <p class="book_detail">Raks :
-                                        {{ $book->rak->name }}</p>
-                                    <p class="book_detail">Publication Year :
-                                        {{ $book->publication_year }}</p>
-                                    {{-- <p class="book_detail">Stok :
-                                        {{ $book->where('title', $book->title)->count() }}</p> --}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endforeach
-        <!-- Products tab & slick -->
-    </div>
-    @include('sweetalert::alert')
-    
+            @include('sweetalert::alert')
+
             <!-- /row -->
         </div>
         <!-- /container -->
@@ -272,7 +262,13 @@
                     <div class="col-md-12 col-xs-12 text-center">
                         <div class="footer">
                             <h3 class="footer-title">SIPUSTAKA</h3>
-                            <p>Sistem Informasi Perpustakaan adalah sebuah sistem yang dirancang dan digunakan untuk mengelola semua aktivitas yang terkait dengan pengelolaan dan pengoperasian sebuah perpustakaan. Tujuan utama dari sistem informasi perpustakaan adalah untuk menyediakan akses yang efisien dan efektif terhadap sumber daya informasi yang tersedia di perpustakaan tersebut. Sistem ini mencakup berbagai fungsi, termasuk pengelolaan katalog, borroweran dan pengembalian buku, manajemen anggota, pelacakan inventaris, serta layanan referensi dan penelusuran.</p>
+                            <p>Sistem Informasi Perpustakaan adalah sebuah sistem yang dirancang dan digunakan untuk
+                                mengelola semua aktivitas yang terkait dengan pengelolaan dan pengoperasian sebuah
+                                perpustakaan. Tujuan utama dari sistem informasi perpustakaan adalah untuk menyediakan
+                                akses yang efisien dan efektif terhadap sumber daya informasi yang tersedia di
+                                perpustakaan tersebut. Sistem ini mencakup berbagai fungsi, termasuk pengelolaan
+                                katalog, borroweran dan pengembalian buku, manajemen anggota, pelacakan inventaris,
+                                serta layanan referensi dan penelusuran.</p>
                         </div>
                     </div>
                     <div class="clearfix visible-xs"></div>
@@ -301,5 +297,3 @@
 </body>
 
 </html>
-
-

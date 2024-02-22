@@ -11,13 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('loans', function (Blueprint $table) {
-            $table->integer('id')->primary();
-            $table->integer('user_id')->index();
-            $table->integer('book_id')->index();
-            $table->date('loan_date');
+        Schema::create('borrows', function (Blueprint $table) {
+            $table->id('id');
+            $table->string('borrow_code');
+            $table->integer('user_id')->unique();
+            $table->integer('book_id');
+            $table->string('book_code');
+            $table->date('borrow_date');
             $table->date('date_of_return');
+            $table->integer('publication_year');
             $table->string('status');
+            $table->timestamps();
         });
     }
 
@@ -26,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+            Schema::dropIfExists('borrows');
     }
 };

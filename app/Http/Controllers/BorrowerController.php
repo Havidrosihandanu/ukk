@@ -23,7 +23,7 @@ class BorrowerController extends Controller
         $newBooks = Book::latest()->paginate(10);
         if ($request->has('search')) {
             $bookAll = Book::where('title', 'like', "%" . $search . "%")
-                ->where('status', '!=', 'borrowed')->get()
+                ->where('status', '!=', 'borrowed')
                 ->where('status', '!=', 'pending')->get();
             return view('borrower.search', compact('bookAll', 'search'));
         } else {
@@ -62,7 +62,7 @@ class BorrowerController extends Controller
             'book_code' => $bookCode,
             'borrow_date' => date('Y-m-d'),
             'date_of_return' => now()->addDays(14),
-            'status' => 'pending',
+            'status' => 'pending'
         ]);
 
         return redirect('borrowerr')->with('success', 'The book has been borrowed successfully, You must Be Return 2 Week Ago ');
@@ -114,6 +114,12 @@ class BorrowerController extends Controller
         $favorites =  Favorite::where('user_id', $userID)->get();
         return view('borrower.favorite', compact('favorites'));
     }
+    public function favoriteDelete($id)
+    {
+        $favorite =  Favorite::where('id', $id)->first();
+        $favorite->delete();
+        return redirect('favorite')->with('success', 'Data Deleted successfully');
+    }
     public function history()
     {
         $userID = auth()->user()->id;
@@ -122,7 +128,16 @@ class BorrowerController extends Controller
     }
     public function borrowerCategory($id)
     {
-        $books = Book::where('category_id', $id)->get();
+        $books = Book::where('category_id', $id)  
+        ->where('status', '!=', 'borrowed')
+        ->where('status', '!=', 'pending')->get();
         return view('borrower.category', compact('books'));
     }
+    public function borrowerCancel($id)
+    {
+        $borrows = Borrow::where('id', $id)->first();
+        $borrows->delete();
+        return redirect('history')->with('success','Success Cancel Borrrowing');
+    }
+  
 }

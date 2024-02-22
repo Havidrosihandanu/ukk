@@ -38,6 +38,9 @@
                                 <button type="button" data-toggle="modal" data-target="#modalView{{ $favorite->id }}"
                                     class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">
                                         view</span></button>
+                                <a href="/favorite/delete/{{$favorite->id }}"
+                                    class="quick-view"><i class="fa fa-trash"></i><span class="tooltipp">
+                                        Delete</span></a>
                             </div>
                         </div>
                     </div>

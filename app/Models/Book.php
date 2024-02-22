@@ -36,4 +36,7 @@ class Book extends Model
     public function review(){
         return $this->hasOne(Review::class);
     }
+    public function report(){
+        return $this->hasOne(Report::class);
+    }
 }

@@ -282,22 +282,36 @@
                                             <td>{{ $borrow->book_code }}</td>
                                             <td>{{ $borrow->borrow_date }}</td>
                                             <td>{{ $borrow->date_of_return }}</td>
-                                            <td>{{ $borrow->status }}</td>
+                                            @if ($borrow->status != 'Borrowed')
+                                                <td>
+                                                    <p class="badge bg-warning">{{ $borrow->status }}</p>
+                                                </td>
+                                            @else
+                                                <td>
+                                                    <p class="badge bg-success">{{ $borrow->status }}</p>
+                                                </td>
+                                            @endif
                                             <td style="width: 150px">
                                                 {{-- <button type="button" class="btn btn-success" data-toggle="modal"
                                                     data-target="#modalView{{ $borrow->id }}">
                                                     <i class="fa-solid fa-eye"></i>
                                                 </button> --}}
-                                                <button type="button" data-toggle="modal"
-                                                    data-target="#modalUpdate{{ $borrow->id }}"
-                                                    class="btn btn-warning">
-                                                    <i class="fa-solid fa-pen"></i>
-                                                </button>
-                                                <button type="button" data-toggle="modal"
+                                                @if ($borrow->status != 'Borrowed')
+                                                    <a href="/borrow/confirm/{{ $borrow->id }}"
+                                                        class="btn btn-success">
+                                                        <i class="fa-solid fa-book"></i> Borrow
+                                                    </a>
+                                                @else
+                                                    <a href='/return/confirm/{{ $borrow->id }}'
+                                                        class="btn btn-secondary">
+                                                        <i class="fa-solid fa-reply"></i> Return
+                                                    </a>
+                                                @endif
+                                                {{-- <button type="button" data-toggle="modal"
                                                     data-target="#modalDelete{{ $borrow->id }}"
                                                     class="btn btn-danger">
                                                     <i class="fa-solid fa-trash"></i>
-                                                </button>
+                                                </button> --}}
                                             </td>
                                         </tr>
                                     @endforeach

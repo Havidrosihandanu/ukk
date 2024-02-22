@@ -184,7 +184,7 @@
                                             <h3 class="product-name">
                                                 <label for="">Review : {{$book->title}}</label>
                                             </h3>
-                                            <input class="" style="width: 100%; height: 200px; padding:3px;border:none" type="" name="review"
+                                            <input class="product" style="width: 100%; height: 200px; padding:3px;border:none" type="" name="review"
                                                 id="">
                                         </div>
                                         <div class="col-md-12">
@@ -202,8 +202,6 @@
             </div>
         </div>
     @endforeach
-
-
     
     <!-- Products tab & slick -->
     @include('sweetalert::alert')

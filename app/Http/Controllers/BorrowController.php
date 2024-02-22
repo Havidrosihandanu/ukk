@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\Borrow;
+use App\Models\Report;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -14,10 +15,15 @@ class   BorrowController extends Controller
      */
     public function index(Request $request)
     {
-        $borrows = Borrow::paginate();
+        $borrows = Borrow::where('status','!=','returned')->paginate();
         $users = User::all();
         $books = Book::all();
+
+        if (auth()->user()->role_id != 3) {
         return view('admin&operator.borrow', compact('borrows', 'users', 'books'));
+        }else{
+            return abort(403);
+        }
     }
 
 
@@ -101,15 +107,60 @@ class   BorrowController extends Controller
 
     public function report(Request $request)
     {
-        // $bookAll = Book::where('title', 'like', "%" . $search . "%")
-        // ->where('status','!=','borrowed')->get();
         $users = User::all();
         $books = Book::all();
         if ($request->has('borrow_date')) {
-            $borrows = Borrow::whereBetween('borrow_date', [$request->borrow_date, $request->end_date])->paginate();
+            $reports = Report::whereBetween('borrow_date', [$request->borrow_date, $request->end_date])->paginate();
         } else {
-            $borrows = Borrow::paginate();
+            $reports = Report::paginate();
         }
-        return view('admin&operator.report', compact('borrows', 'users', 'books'));
+        if (auth()->user()->role_id != 3) {
+        return view('admin&operator.report', compact('reports', 'users', 'books'));
+        }else{
+            return abort(403);
+        }
+    }
+
+    public function borrowConfirm($id)
+    {
+        $borrow = Borrow::where('id',$id)->first();
+        $book = Book::where('id',$borrow->book_id)->first();
+        $borrow->update([
+            'status' => 'Borrowed'
+        ]);
+        $book->update([
+            'status' => 'Borrowed'
+        ]);
+        Report::create([
+            'borrow_code' => $borrow->borrow_code,
+            'user_id' => $borrow->user_id,
+            'book_id' => $borrow->book_id,
+            'book_code' => $borrow->book_code,
+            'borrow_date' => $borrow->borrow_date,
+            'date_of_return' => $borrow->date_of_return,
+            'status' => 'Borrowed'
+        ]);
+        return redirect('borrow')->with('success','Status Successfuly change');
+    }
+    public function returnConfirm($id)
+    {
+        $borrow = Borrow::where('id',$id)->first();
+        $book = Book::where('id',$borrow->book_id)->first();
+        $borrow->update([
+            'status' => 'Returned'
+        ]);
+        $book->update([
+            'status' => 'Returned'
+        ]);
+        Report::create([
+            'borrow_code' => $borrow->borrow_code,
+            'user_id' => $borrow->user_id,
+            'book_id' => $borrow->book_id,
+            'book_code' => $borrow->book_code,
+            'borrow_date' => $borrow->borrow_date,
+            'date_of_return' => now(),
+            'status' => 'Returned'
+        ]);
+        return redirect('borrow')->with('success','Status Successfuly change');
     }
 }

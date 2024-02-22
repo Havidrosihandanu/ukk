@@ -40,6 +40,10 @@
                             data-target="#modalCreate">
                             Add Book
                         </button>
+                        <button type="button" class="btn btn-primary mb-2" data-toggle="modal"
+                            data-target="#modalCategory">
+                            Add Category
+                        </button>
 
                         <!-- Modal Create book  -->
                         <div class="modal fade" id="modalCreate" tabindex="-1" role="dialog"
@@ -117,6 +121,38 @@
                         </div>
                         {{-- end modal create book --}}
 
+                        {{-- modal category --}}
+                        <div class="modal fade" id="modalCategory" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Add Category</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/category/store" method="POST"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        @method('POST')
+                                        <div class="form-group">
+                                            <label for="">Category Name</label>
+                                            <input class="form-control @error('category_name') is-invalid @enderror"
+                                                type="text" name="category_name" id="">
+                                            @error('category_name')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <button type="submit" class="btn btn-primary float-right">Save
+                                            changes</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        {{-- end modal category --}}
 
                         <!-- Modal view -->
                         @foreach ($books as $book)

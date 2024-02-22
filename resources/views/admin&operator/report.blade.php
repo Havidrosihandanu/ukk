@@ -37,13 +37,13 @@
                             @csrf
                             <div class="col-md-2">
                                 <div class="form-group m-4">
-                                    <label for="">Tanggal Awal</label>
+                                    <label for="">Early Date</label>
                                     <input name="borrow_date" type="date" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group m-4">
-                                    <label for="">Tanggal Akhir</label>
+                                    <label for="">End Date</label>
                                     <input name="end_date" type="date" class="form-control">
                                 </div>
                             </div>
@@ -74,14 +74,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($borrows as $no => $borrow)
+                                    @foreach ($reports as $no => $report)
                                         <tr>
-                                            <td style="width: 50px;">{{ $borrows->firstItem() + $no }}</td>
-                                            <td>{{ $borrow->user->full_name }}</td>
-                                            <td>{{ $borrow->book->title }}</td>
-                                            <td>{{ $borrow->borrow_date }}</td>
-                                            <td>{{ $borrow->date_of_return }}</td>
-                                            <td>{{ $borrow->status }}</td>
+                                            <td style="width: 50px;">{{ $reports->firstItem() + $no }}</td>
+                                            <td>{{ $report->user->full_name }}</td>
+                                            <td>{{ $report->book->title }}</td>
+                                            <td>{{ $report->borrow_date }}</td>
+                                            <td>{{ $report->date_of_return }}</td>
+                                            <td>
+                                                <p class="badge bg-success">{{ $report->status }}</p>
+                                            </td>
                                         </tr>
                                     @endforeach
 

@@ -38,12 +38,14 @@
                                 <button type="button" data-toggle="modal" data-target="#modalView{{ $history->id }}"
                                     class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">
                                         view</span></button>
-                                <a href="/reviews/{{ $history->book->id }}"
-                                    class="quick-view"><i class="fa fa-comments-o"></i><span class="tooltipp">
+                                <a href="/reviews/{{ $history->book->id }}" class="quick-view"><i
+                                        class="fa fa-comments-o"></i><span class="tooltipp">
                                         Review</span></a>
-                                {{-- <button type="button" data-toggle="modal" data-target="#modalReview{{ $history->id }}"
-                                    class="quick-view"><i class="fa fa-comments-o"></i><span class="tooltipp">
-                                        Review</span></button> --}}
+                                @if ($history->status == 'pending')
+                                    <a href="/borrower/cancel/{{ $history->id }}" ><i
+                                            class="fa fa-trash"></i><span class="tooltipp">
+                                            Cancel Borrow</span></a>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -105,21 +107,21 @@
                     <div class="modal-body">
                         <div class="container">
                             <div class="row">
-                                <form action="/reviews" method="POST"
-                                    enctype="multipart/form-data">
+                                <form action="/reviews" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     @method('POST')
                                     <div class="form-group">
                                         <label for="">Book:</label> <br>
-                                        <select  name="book_id" id="">
-                                            <option tyle="width: 100%;padding:3px" value="{{ $history->book_id }}">{{ $history->book->title }}
+                                        <select name="book_id" id="">
+                                            <option tyle="width: 100%;padding:3px" value="{{ $history->book_id }}">
+                                                {{ $history->book->title }}
                                             </option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="">Review:</label><br>
-                                        <input class="" style="width: 35%;padding:3px" type="text" name="review"
-                                            id="">
+                                        <input class="" style="width: 35%;padding:3px" type="text"
+                                            name="review" id="">
                                     </div>
                                     <div class="col-md-2"></div>
                                     <div class="col-md-8"> <button style="align-content: center;margin: auto"

@@ -17,7 +17,12 @@ class BookController extends Controller
         $categories =  Categorie::all();
         $books = Book::paginate(10);
         $raks = Rak::all();
+
+        if (auth()->user()->role_id != 3) {
         return view('admin&operator.book', compact('books', 'categories', 'raks'));
+        }else{
+            return abort(403);
+        }
     }
 
     /**
@@ -111,5 +116,12 @@ class BookController extends Controller
         unlink($file);
         $book->delete();
         return redirect('book')->with('success', 'Data Deleted successfully');
+    }
+    public function categoryStore(Request $request)
+    {
+        Categorie::create([
+            'category_name' => $request->category_name
+        ]);
+        return redirect('book')->with('success', 'Category successfully Added');
     }
 }
