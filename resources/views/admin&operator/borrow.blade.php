@@ -16,7 +16,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Borrow</li>
+                        <li class="breadcrumb-item active">Borrow Confirmation</li>
                     </ol>
                 </div>
             </div>
@@ -166,7 +166,7 @@
                         {{-- end modal view --}}
 
                         {{-- modal update --}}
-                        @foreach ($borrows as $borrow)
+                        {{-- @foreach ($borrows as $borrow)
                             <div class="modal fade" id="modalUpdate{{ $borrow->id }}" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
@@ -223,7 +223,7 @@
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                        @endforeach --}}
                         {{-- end modal update --}}
 
                         {{-- modal delete --}}

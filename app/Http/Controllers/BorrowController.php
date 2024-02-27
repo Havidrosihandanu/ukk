@@ -15,13 +15,13 @@ class   BorrowController extends Controller
      */
     public function index(Request $request)
     {
-        $borrows = Borrow::where('status','!=','returned')->paginate();
+        $borrows = Borrow::where('status', '!=', 'returned')->latest()->paginate();
         $users = User::all();
         $books = Book::all();
 
         if (auth()->user()->role_id != 3) {
-        return view('admin&operator.borrow', compact('borrows', 'users', 'books'));
-        }else{
+            return view('admin&operator.borrow', compact('borrows', 'users', 'books'));
+        } else {
             return abort(403);
         }
     }
@@ -82,7 +82,7 @@ class   BorrowController extends Controller
     public function update(Request $request, string $id)
     {
         $borrow = Borrow::where('id', $id)->first();
-        $book = Book::where('book_code',$borrow->book_code)->first();
+        $book = Book::where('book_code', $borrow->book_code)->first();
         $book->update([
             'status' => $request->status
         ]);
@@ -110,57 +110,40 @@ class   BorrowController extends Controller
         $users = User::all();
         $books = Book::all();
         if ($request->has('borrow_date')) {
-            $reports = Report::whereBetween('borrow_date', [$request->borrow_date, $request->end_date])->paginate();
+            $reports = Borrow::whereBetween('borrow_date', [$request->borrow_date, $request->end_date])->latest()->paginate();
         } else {
-            $reports = Report::paginate();
+            $reports = Borrow::where('status','Returned')->latest()->paginate();
         }
         if (auth()->user()->role_id != 3) {
-        return view('admin&operator.report', compact('reports', 'users', 'books'));
-        }else{
+            return view('admin&operator.report', compact('reports', 'users', 'books'));
+        } else {
             return abort(403);
         }
     }
 
     public function borrowConfirm($id)
     {
-        $borrow = Borrow::where('id',$id)->first();
-        $book = Book::where('id',$borrow->book_id)->first();
+        $borrow = Borrow::where('id', $id)->first();
+        $book = Book::where('id', $borrow->book_id)->first();
         $borrow->update([
             'status' => 'Borrowed'
         ]);
         $book->update([
             'status' => 'Borrowed'
         ]);
-        Report::create([
-            'borrow_code' => $borrow->borrow_code,
-            'user_id' => $borrow->user_id,
-            'book_id' => $borrow->book_id,
-            'book_code' => $borrow->book_code,
-            'borrow_date' => $borrow->borrow_date,
-            'date_of_return' => $borrow->date_of_return,
-            'status' => 'Borrowed'
-        ]);
-        return redirect('borrow')->with('success','Status Successfuly change');
+        return redirect('borrow')->with('success', 'Status Successfuly change');
     }
     public function returnConfirm($id)
     {
-        $borrow = Borrow::where('id',$id)->first();
-        $book = Book::where('id',$borrow->book_id)->first();
+        $borrow = Borrow::where('id', $id)->first();
+        $book = Book::where('id', $borrow->book_id)->first();
         $borrow->update([
             'status' => 'Returned'
         ]);
         $book->update([
             'status' => 'Returned'
         ]);
-        Report::create([
-            'borrow_code' => $borrow->borrow_code,
-            'user_id' => $borrow->user_id,
-            'book_id' => $borrow->book_id,
-            'book_code' => $borrow->book_code,
-            'borrow_date' => $borrow->borrow_date,
-            'date_of_return' => now(),
-            'status' => 'Returned'
-        ]);
-        return redirect('borrow')->with('success','Status Successfuly change');
+
+        return redirect('borrow')->with('success', 'Status Successfuly change');
     }
 }

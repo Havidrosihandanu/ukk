@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" type="image/x-icon" href="/logo perpus.png">
+    <link rel="icon" type="image/x-icon" href="/logo perpus.png">
     <title>
-       SI PUSTAKA | @yield('title')
+        SI PUSTAKA | @yield('title')
     </title>
 
     <!-- Google Font: Source Sans Pro -->
@@ -65,7 +65,7 @@
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
                 <!-- Navbar Search -->
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" data-widget="navbar-search" href="#" role="button">
                         <i class="fas fa-search"></i>
                     </a>
@@ -85,7 +85,7 @@
                             </div>
                         </form>
                     </div>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
                         <i class="fas fa-expand-arrows-alt"></i>

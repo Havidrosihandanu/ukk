@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//auth
+//auth route
 Route::resource('/login', LoginController::class)->middleware('guest');
 Route::get('/', [LoginController::class,'index'])->middleware('guest')->name('login');
 Route::post('/logout',[LoginController::class, 'logout'])->middleware('auth')->name('logout');
@@ -37,7 +37,8 @@ Route::post('/category/store',[BookController::class,'categoryStore'])->middlewa
 Route::resource('/borrow', BorrowController::class)->middleware('auth');
 Route::get('/report', [BorrowController::class,'report'])->middleware('auth');
 Route::resource('/review', ReviewController::class)->middleware('auth');
-// Route::get('/reportt/search', [BorrowController::class,'search'])->middleware('auth');
+Route::get('/borrow/confirm/{id}',[BorrowController::class,'borrowConfirm'])->middleware('auth');
+Route::get('/return/confirm/{id}',[BorrowController::class,'returnConfirm'])->middleware('auth');
 
 //borrower route
 Route::resource('/borrowerr', BorrowerController::class)->middleware('borrower');
@@ -50,5 +51,3 @@ Route::get('/favorite/delete/{id}',[BorrowerController::class,'favoriteDelete'])
 Route::get('/reviews/{id}',[ReviewController::class,'review'])->middleware('borrower');
 Route::post('/reviews/{id}',[ReviewController::class,'reviewPost'])->middleware('borrower');
 Route::get('/history',[BorrowerController::class,'history'])->middleware('borrower');
-Route::get('/borrow/confirm/{id}',[BorrowController::class,'borrowConfirm'])->middleware('auth');
-Route::get('/return/confirm/{id}',[BorrowController::class,'returnConfirm'])->middleware('auth');

@@ -23,27 +23,29 @@
             @foreach ($historis as $history)
                 <div class="col-md-3">
                     <div class="product">
-                        <div class="product-img">
-                            <img src="{{ asset('storage/book/' . $history->book->img) }}" width="200px" height="270px"
+                        <div class="product-img" height = "350px">
+                            <img src="{{ asset('storage/book/' . $history->book->img) }}" width="200px" height="350px"
                                 alt="">
                             <div class="product-label">
                                 <span class="sale">History</span>
                             </div>
                         </div>
-                        <div class="product-body">
+                        <div class="product-body" style="background-color: rgb(241, 241, 241)">
                             <h3 class="product-name"><a href="#">{{ $history->book->title }}</a></h3>
                             <div class="product-rating">
                             </div>
                             <div class="product-btns">
                                 <button type="button" data-toggle="modal" data-target="#modalView{{ $history->id }}"
                                     class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">
-                                        view</span></button>
-                                <a href="/reviews/{{ $history->book->id }}" class="quick-view"><i
-                                        class="fa fa-comments-o"></i><span class="tooltipp">
-                                        Review</span></a>
+                                    view</span></button>
+                                @if ($history->status != 'pending')
+                                    <a href="/reviews/{{ $history->book->id }}" class="quick-view"><i
+                                            class="fa fa-comments-o"></i><span class="tooltipp">
+                                            Review</span></a>
+                                @endif
                                 @if ($history->status == 'pending')
-                                    <a href="/borrower/cancel/{{ $history->id }}" ><i
-                                            class="fa fa-trash"></i><span class="tooltipp">
+                                    <a href="/borrower/cancel/{{ $history->id }}"><i class="fa fa-trash"></i><span
+                                            class="tooltipp">
                                             Cancel Borrow</span></a>
                                 @endif
                             </div>

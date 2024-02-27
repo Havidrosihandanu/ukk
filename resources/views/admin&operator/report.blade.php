@@ -38,13 +38,13 @@
                             <div class="col-md-2">
                                 <div class="form-group m-4">
                                     <label for="">Early Date</label>
-                                    <input name="borrow_date" type="date" class="form-control">
+                                    <input name="borrow_date" value="{{old('borrow_date',date('Y-m-d'))}}" type="date" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group m-4">
                                     <label for="">End Date</label>
-                                    <input name="end_date" type="date" class="form-control">
+                                    <input name="end_date" value="{{old('end_date',date('Y-m-d'))}}" type="date" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group mt-5">

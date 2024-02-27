@@ -17,7 +17,7 @@ class userController extends Controller
     public function index()
     {
         $role = Role::all();
-        $users = User::paginate(10);
+        $users = User::latest()->paginate(10);
 
         if (auth()->user()->role_id != 3) {
         return view('admin&operator.user', compact('users', 'role'));

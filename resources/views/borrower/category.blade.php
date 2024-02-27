@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title> SIPUS | @yield('title') </title>
+    <title> SI PUSTAKA | Borrower</title>
 
     <!-- Google font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
@@ -174,14 +174,14 @@
                         @foreach ($books as $bookk)
                             <div class="col-md-3">
                                 <div class="product">
-                                    <div class="product-img">
+                                    <div class="product-img" height="350px">
                                         <img src="{{ asset('storage/book/' . $bookk->img) }}" width="200px"
-                                            height="270px" alt="">
+                                            height="350px" alt="">
                                         <div class="product-label">
                                             <span class="sale">{{ $bookk->category->category_name }}</span>
                                         </div>
                                     </div>
-                                    <div class="product-body">
+                                    <div class="product-body" style="background-color: rgb(241, 241, 241)">
                                         <h3 class="product-name"><a href="#">{{ $bookk->title }}</a></h3>
                                         <div class="product-rating">
                                         </div>
@@ -190,8 +190,8 @@
                                                 data-target="#modalView{{ $bookk->id }}" class="quick-view"><i
                                                     class="fa fa-eye"></i><span class="tooltipp">
                                                     view</span></button>
-                                                    <a href="/borrows/{{ $bookk->book_code }}/{{$bookk->id}}" class="add-to-cart-btn"
-                                                        style="height: 50px ;!important"> borrow </a>
+                                            <a href="/borrows/{{ $bookk->book_code }}/{{ $bookk->id }}"
+                                                class="add-to-cart-btn" style="height: 50px ;!important"> borrow </a>
                                         </div>
                                     </div>
                                 </div>

@@ -1,5 +1,3 @@
-
-
 @extends('admin&operator.layout')
 
 @section('container')
@@ -40,7 +38,7 @@
 
         <div class="small-box " style="background: #5f5f5f;color: white">
             <div class="inner">
-                <h3>{{$book}}<sup style="font-size: 20px"></sup></h3>
+                <h3>{{ $book }}<sup style="font-size: 20px"></sup></h3>
                 <p>Book</p>
             </div>
             <div class="icon">
@@ -54,7 +52,7 @@
 
         <div class="small-box" style="background: #16827e;color: white">
             <div class="inner">
-                <h3>{{$bookBorrowed}}</h3>
+                <h3>{{ $bookBorrowed }}</h3>
                 <p>Book Borrowed</p>
             </div>
             <div class="icon">
@@ -68,8 +66,8 @@
 
         <div class="small-box bg-danger">
             <div class="inner">
-                <h3>{{$report}}</h3>
-                <p>Report Total</p>
+                <h3>{{ $report }}</h3>
+                <p>Book Returned</p>
             </div>
             <div class="icon">
                 <i class="ion ion-pie-graph"></i>
@@ -107,9 +105,9 @@
             {{-- <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
               <canvas id="sales-chart-canvas" height="375" style="height: 300px; display: block; width: 676px;" width="845" class="chartjs-render-monitor"></canvas>
             </div> --}}
-          </div>
-        </div><!-- /.card-body -->
-      </div>
+</div>
+</div><!-- /.card-body -->
+</div>
 {{-- </div>  --}}
 @include('sweetalert::alert')
 @endsection

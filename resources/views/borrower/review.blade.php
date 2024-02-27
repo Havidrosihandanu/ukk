@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title> SIPUS | @yield('title') </title>
+    <title> SI  PUSTAKA | Review </title>
 
     <!-- Google font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
@@ -166,17 +166,22 @@
                 <div class="product" >
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="product-img">
-                                <img src="{{ asset('storage/book/' . $book->img) }}" width="150px" height="470px"
+                            <div class="product-img" height="470px !important">
+                                <img src="{{ asset('storage/book/' . $book->img) }}" width="150px" height="600px !important"
                                 alt="">
                             </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="product-body " style="margin-top: 40px">
-                                    
-                                    <div class="product-btns">
+                            <div class="col-md-4 ">
+                                <div class="product-body " style="margin-top: 100px">
+                                    <div class="product-btns " >
                                         <form action="/reviews/{{$book->id}}" method="POST"
-                                        enctype="multipart/form-data">
+                                        enctype="multipart/form-data" style="padding: 0px; 
+                                        text-align: center;
+                                        width: 500px;
+                                        margin: auto;
+                                        font-size: 20px;
+                                        height: 500px !important;
+                                        display: table;">
                                         @csrf
                                         @method('POST')
                                         <div class="form-group">

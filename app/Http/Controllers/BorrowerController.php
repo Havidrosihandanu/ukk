@@ -24,12 +24,12 @@ class BorrowerController extends Controller
         if ($request->has('search')) {
             $bookAll = Book::where('title', 'like', "%" . $search . "%")
                 ->where('status', '!=', 'borrowed')
-                ->where('status', '!=', 'pending')->get();
+                ->where('status', '!=', 'pending')->latest()->get();
             return view('borrower.search', compact('bookAll', 'search'));
         } else {
             $bookAll = Book::where('status', '!=', 'borrowed')
-            ->where('status', '!=', 'borrowed')
-            ->where('status', '!=', 'pending')->get();
+                ->where('status', '!=', 'borrowed')
+                ->where('status', '!=', 'pending')->latest()->get();
             return view('borrower.index', compact('borrows', 'users', 'bookAll', 'newBooks'));
         }
     }
@@ -45,18 +45,18 @@ class BorrowerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, $bookCode,$id)
+    public function store(Request $request, $bookCode, $id)
     {
         $userID = auth()->user()->id;
         $no = Borrow::where('user_id', $userID)->count();
 
-        $book = Book::where('book_code',$bookCode)->first();
+        $book = Book::where('book_code', $bookCode)->first();
         $book->update([
             'status' => 'pending'
         ]);
 
         Borrow::create([
-            'borrow_code' => 'Borrow -' . $userID . $no + 1,
+            'borrow_code' => 'Borrow-' . $userID . $no + 1,
             'user_id' => $userID,
             'book_id' => $id,
             'book_code' => $bookCode,
@@ -111,7 +111,7 @@ class BorrowerController extends Controller
     public function favorite()
     {
         $userID = auth()->user()->id;
-        $favorites =  Favorite::where('user_id', $userID)->get();
+        $favorites =  Favorite::where('user_id', $userID)->latest()->get();
         return view('borrower.favorite', compact('favorites'));
     }
     public function favoriteDelete($id)
@@ -123,21 +123,28 @@ class BorrowerController extends Controller
     public function history()
     {
         $userID = auth()->user()->id;
-        $historis =  Borrow::where('user_id', $userID)->get();
+        $historis =  Borrow::where('user_id', $userID)->latest()->get();
         return view('borrower.history', compact('historis'));
     }
     public function borrowerCategory($id)
     {
-        $books = Book::where('category_id', $id)  
-        ->where('status', '!=', 'borrowed')
-        ->where('status', '!=', 'pending')->get();
+        $books = Book::where('category_id', $id)
+            ->where('status', '!=', 'borrowed')
+            ->where('status', '!=', 'pending')->latest()->get();
         return view('borrower.category', compact('books'));
     }
     public function borrowerCancel($id)
     {
+
         $borrows = Borrow::where('id', $id)->first();
+        $books = Book::where('id', $borrows->book_id)->first();
+        $books->update([
+            'status' => 'ready'
+        ]);
+        $borrows->update([
+            'status' => 'ready'
+        ]);
         $borrows->delete();
-        return redirect('history')->with('success','Success Cancel Borrrowing');
+        return redirect('history')->with('success', 'Success Cancel Borrrowing');
     }
-  
 }

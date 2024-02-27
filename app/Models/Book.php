@@ -30,13 +30,16 @@ class Book extends Model
     {
         return $this->belongsTo(Rak::class);
     }
-    public function book(){
+    public function book()
+    {
         return $this->hasOne(Book::class);
     }
-    public function review(){
+    public function review()
+    {
         return $this->hasOne(Review::class);
     }
-    public function report(){
+    public function report()
+    {
         return $this->hasOne(Report::class);
     }
 }

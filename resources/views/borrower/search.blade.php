@@ -26,33 +26,33 @@
         </div>
     </div>
 
-        @foreach ($bookAll as $book)
-            <div class="col-md-3">
-                <div class="row ">
-                    <div class="product">
-                        <div class="product-img">
-                            <img src="{{ asset('storage/book/' . $book->img) }}" width="200px" height="270px"
-                                alt="">
+    @foreach ($bookAll as $book)
+        <div class="col-md-3">
+            <div class="row ">
+                <div class="product">
+                    <div class="product-img" hight="350px">
+                        <img src="{{ asset('storage/book/' . $book->img) }}" width="200px" height="350px"
+                            alt="">
+                    </div>
+                    <div class="product-body" style="background-color: rgb(241, 241, 241)">
+                        <p class="product-category">{{ $book->category->category_name }}</p>
+                        <h3 class="product-name"><a href="#">{{ $book->title }}</a></h3>
+                        <div class="product-rating">
                         </div>
-                        <div class="product-body">
-                            <p class="product-category">{{ $book->category->category_name }}</p>
-                            <h3 class="product-name"><a href="#">{{ $book->title }}</a></h3>
-                            <div class="product-rating">
-                            </div>
-                            <div class="product-btns">
-                                <a type="button" href="/favorite/{{ $book->id }}" class="add-to-wishlist"><i
-                                        class="fa fa-heart-o"></i></a>
-                                <button type="button" data-toggle="modal" data-target="#modalView{{ $book->id }}"
-                                    class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">
-                                        view</span></button>
-                                <a href="/borrows/{{ $book->id }}" class="add-to-cart-btn"
-                                    style="height: 50px ;!important"> borrow </a>
-                            </div>
+                        <div class="product-btns">
+                            <a type="button" href="/favorite/{{ $book->id }}" class="add-to-wishlist"><i
+                                    class="fa fa-heart-o"></i></a>
+                            <button type="button" data-toggle="modal" data-target="#modalView{{ $book->id }}"
+                                class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">
+                                    view</span></button>
+                            <a href="/borrows/{{ $book->id }}" class="add-to-cart-btn"
+                                style="height: 50px ;!important"> borrow </a>
                         </div>
                     </div>
                 </div>
             </div>
-        @endforeach
+        </div>
+    @endforeach
     {{-- @foreach ($books as $book)
         <div class="col-md-3">
             <div class="row ">

@@ -23,14 +23,14 @@
             @foreach ($favorites as $favorite)
                 <div class="col-md-3">
                     <div class="product">
-                        <div class="product-img">
-                            <img src="{{ asset('storage/book/' . $favorite->book->img) }}" width="200px" height="270px"
+                        <div class="product-img" height="350px">
+                            <img src="{{ asset('storage/book/' . $favorite->book->img) }}" width="200px" height="350px"
                                 alt="">
                             <div class="product-label">
                                 <span class="sale">Favorite</span>
                             </div>
                         </div>
-                        <div class="product-body">
+                        <div class="product-body" style="background-color: rgb(241, 241, 241)">
                             <h3 class="product-name"><a href="#">{{ $favorite->book->title }}</a></h3>
                             <div class="product-rating">
                             </div>
@@ -38,8 +38,10 @@
                                 <button type="button" data-toggle="modal" data-target="#modalView{{ $favorite->id }}"
                                     class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">
                                         view</span></button>
-                                <a href="/favorite/delete/{{$favorite->id }}"
-                                    class="quick-view"><i class="fa fa-trash"></i><span class="tooltipp">
+                                <a href="/borrows/{{ $favorite->book->book_code }}/{{ $favorite->book->id }}"
+                                    class="add-to-cart-btn" style="height: 50px ;!important"> borrow </a>
+                                <a href="/favorite/delete/{{ $favorite->id }}" class="quick-view"><i
+                                        class="fa fa-trash"></i><span class="tooltipp">
                                         Delete</span></a>
                             </div>
                         </div>

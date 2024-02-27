@@ -55,10 +55,12 @@ class User extends Authenticatable
     {
         return $this->hasOne(borrow::class);
     }
-    public function review(){
+    public function review()
+    {
         return $this->hasOne(Review::class);
     }
-    public function report(){
+    public function report()
+    {
         return $this->hasOne(Report::class);
     }
 }

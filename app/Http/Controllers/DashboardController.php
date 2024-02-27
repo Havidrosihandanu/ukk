@@ -13,7 +13,7 @@ class DashboardController extends Controller
     {
         $user = User::where('role_id', 3)->count();
         $book = Book::count();
-        $report = Borrow::count();
+        $report = Borrow::where('status','Returned')->count();
         $bookBorrowed = Borrow::where('status', 'Borrowed')->count();
 
         if (auth()->user()->role_id != 3) {

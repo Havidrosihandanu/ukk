@@ -15,12 +15,12 @@ class BookController extends Controller
     public function index()
     {
         $categories =  Categorie::all();
-        $books = Book::paginate(10);
+        $books = Book::latest()->paginate();
         $raks = Rak::all();
 
         if (auth()->user()->role_id != 3) {
-        return view('admin&operator.book', compact('books', 'categories', 'raks'));
-        }else{
+            return view('admin&operator.book', compact('books', 'categories', 'raks'));
+        } else {
             return abort(403);
         }
     }
